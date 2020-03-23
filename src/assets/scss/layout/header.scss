@@ -1,0 +1,180 @@
+.ad-header-navbar {
+    height: $header-height !important;
+    background-color: $main-bg !important;
+    padding: 0px !important;
+    &.fixed-top {
+        z-index: 500;
+    }
+    .navbar-brand {
+        height: $header-height !important;
+        line-height: $header-height !important;
+        display: block !important;
+        width: $sidebar-width;
+        padding: 0px !important;
+        margin: 0px !important;
+        text-align: center;
+        p {
+            &.min-logo {
+                display: none;
+            }
+        }
+        i {
+            font-size: 20px;
+        }
+    }
+    .navbar-toggler {
+        border: none;
+        outline: none;
+        color: #fff;
+    }
+    .navbar-collapse {
+        ul {
+            height: $header-height !important;
+            &.navbar-nav-left {
+                line-height: $header-height !important;
+                >li {
+                    color: #fff;
+                    font-size: 20px;
+                    cursor: pointer;
+                    &.navbar-toggle-min {
+                        display: none;
+                    }
+                }
+            }
+            &.navbar-nav-right {
+                background-color: $main-bg !important;
+                >li {
+                    padding-top: 5px;
+                    >a {
+                        >.icon {
+                            color: #fff;
+                        }
+                        >.avatar {
+                            img {
+                                width: 25px;
+                                height: 25px;
+                            }
+                        }
+                    }
+                    .dropdown-menu-personal-info {
+                        width: 160px;
+                        a {
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #76838f;
+                            &:active {
+                                background-color: #f8f9fa;
+                                color: #76838f;
+                            }
+                            i {
+                                margin-right: 10px;
+                            }
+                        }
+                    }
+                    .dropdown-menu-media {
+                        width: 400px;
+                        height: auto !important;
+                        padding: 0px;
+                        >li {
+                            &.dropdown-menu-header {
+                                padding: 10px;
+                                background-color: #fff;
+                                border-bottom: 1px solid #e4eaec;
+                                h5 {
+                                    font-size: 15px;
+                                }
+                            }
+                            &.list-group {
+                                >div {
+                                    p {
+                                        height: 200px;
+                                        line-height: 200px;
+                                    }
+                                }
+                            }
+                        }
+                        .dropdown-menu-footer {
+                            background-color: #f3f7f9;
+                            border-top: 1px solid #e4eaec;
+                            a {
+                                padding: 15px 20px !important;
+                                color: #a3afb7;
+                                font-size: 13px;
+                                i {
+                                    margin-right: 5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* 收起菜单，显示为文件夹模式显示样式 */
+
+.site-menubar-fold {
+    .ad-header-navbar {
+        .navbar-brand {
+            width: $header-min-width;
+            p {
+                display: none;
+                &.min-logo {
+                    display: block;
+                }
+            }
+        }
+        .navbar-collapse {
+            ul {
+                &.navbar-nav-left {
+                    >li {
+                        &.navbar-toggle-min {
+                            display: block;
+                        }
+                        &.nav-toggle {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* 当屏幕小于等于700样式 */
+
+@media(max-width:700px) {
+    .ad-header-navbar {
+        .navbar-brand {
+            width: auto;
+        }
+        .navbar-collapse {
+            ul {
+                &.navbar-nav-left {
+                    display: none;
+                }
+                &.navbar-nav-right {
+                    display: none;
+                    >li {
+                        display: inline-block;
+                        position: static;
+                        .dropdown-menu-personal-info,
+                        .dropdown-menu-media {
+                            border-top-left-radius: 0;
+                            border-top-right-radius: 0;
+                            right: 0;
+                            left: 0 !important;
+                            top: 100px !important;
+                            margin-top: 0px !important;
+                            width: 100% !important;
+                            min-width: 100% !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

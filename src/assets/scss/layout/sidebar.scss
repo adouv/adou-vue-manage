@@ -1,0 +1,120 @@
+.ad-layout-sidebar {
+    width: $sidebar-width;
+    height: 100%;
+    min-height: 100%;
+    padding-top: $header-height;
+    position: fixed;
+    z-index: 499;
+    top: 0px;
+    left: 0px;
+    background-color: $sidebar-bg;
+    .site-menubar-body {
+        height: 100%;
+        min-height: 100%;
+        overflow-y: auto;
+        @include scroll-bar(3px);
+        .tab-content {
+            .tab-pane {
+                ul,
+                li {
+                    list-style: none;
+                }
+                >ul {
+                    >li {
+                        position: relative;
+                        &.site-menu-category {
+                            color: $sidebar-text-color;
+                            font-size: 12px;
+                            padding: 10px 20px;
+                        }
+                        >a,
+                        a {
+                            color: $sidebar-text-color;
+                            font-size: 14px;
+                            display: block;
+                            line-height: 40px;
+                            padding: 0px 20px;
+                            text-decoration: none;
+                            &:hover {
+                                color: $sidebar-text-color-hover;
+                                background-color: $sidebar-bg-hover;
+                            }
+                            i {
+                                margin-right: 5px;
+                            }
+                            .icon-right {
+                                position: absolute;
+                                font-size: 15px;
+                                font-weight: bold;
+                                top: 11px;
+                                right: 20px;
+                            }
+                        }
+                        .site-menu-sub {
+                            background-color: $sidebar-bg;
+                            li {
+                                text-indent: 1.5em;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.site-menubar-fold {
+    .ad-layout-sidebar {
+        width: $header-min-width;
+        .site-menubar-body {
+            .tab-content {
+                .tab-pane {
+                    >ul {
+                        >li {
+                            >a {
+                                padding-top: 10px;
+                                padding-bottom: 10px;
+                                text-align: center;
+                                font-size: 25px;
+                                .site-menu-title {
+                                    display: none;
+                                }
+                                .icon-right {
+                                    display: none;
+                                }
+                            }
+                            .site-menu-sub {
+                                display: none;
+                            }
+                            &:hover {
+                                .site-menu-sub {
+                                    padding-top: $header-height;
+                                    display: block;
+                                    width: 200px;
+                                    min-height: 100%;
+                                    position: fixed;
+                                    left: $header-min-width - 3px;
+                                    top: 0px;
+                                    z-index: 1029;
+                                    margin: 0px;
+                                    overflow-y: auto;
+                                    @include scroll-bar(3px);
+                                    li {
+                                        text-indent: initial;
+                                        margin: 0px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width:700px) {
+    .ad-layout-sidebar {
+        left: -$sidebar-width;
+    }
+}

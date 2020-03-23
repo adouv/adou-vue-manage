@@ -1,0 +1,35 @@
+/* 主色 */
+
+$main-bg:#3e8ef7; //主色
+
+/* 头部 */
+
+$header-height:50px; //头部高度
+$header-min-width:100px; //头部左侧最小宽度
+
+/* 左侧菜单 */
+
+$sidebar-width:240px; //左侧菜单默认宽度
+$sidebar-bg:#263238; //左侧菜单背景色
+$sidebar-text-color:rgba(163, 175, 183, .9); //左侧菜单字体颜色
+$sidebar-bg-hover:rgba(255, 255, 255, .02); //左侧菜单鼠标经过背景色
+$sidebar-text-color-hover:rgba(255, 255, 255, .8); //左侧菜单鼠标经过字体颜色
+
+/* 单独引入bootstrap ui 部分样式组件 */
+
+@import "../../../node_modules/bootstrap/scss/functions.scss";
+@import "../../../node_modules/bootstrap/scss/variables.scss";
+@import "../../../node_modules/bootstrap/scss/mixins.scss";
+@import "../../../node_modules/bootstrap/scss/nav.scss";
+@import "../../../node_modules/bootstrap/scss/navbar.scss";
+@import "../../../node_modules/bootstrap/scss/dropdown.scss";
+@import "../../../node_modules/bootstrap/scss/grid.scss";
+@import "../../../node_modules/bootstrap/scss/media.scss";
+@import "../../../node_modules/bootstrap/scss/card.scss";
+@import "../../../node_modules/bootstrap/scss/tables.scss";
+@import "../../../node_modules/bootstrap/scss/utilities.scss";
+
+/* 自定义样式引入 */
+
+@import "./ddd/index.scss";
+@import "./layout/index.scss";
