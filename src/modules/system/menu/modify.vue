@@ -1,7 +1,7 @@
 <template>
   <ad-main
     :title="['系统菜单管理',`${params.ID === 0 ? '添加' : '编辑'}系统菜单`]"
-    :back="true"
+    back
     class="ad-system-menu-modify"
   >
     <div class="row row-lg">

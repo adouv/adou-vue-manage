@@ -1,7 +1,7 @@
 <template>
   <ad-main
     :title="['系统角色管理',`${params.ID === 0 ? '添加' : '编辑'}系统角色`]"
-    :back="true"
+    back
     class="ad-system-role-modify"
   >
     <div class="row row-lg">

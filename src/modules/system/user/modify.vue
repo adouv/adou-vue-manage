@@ -1,9 +1,5 @@
 <template>
-  <ad-main
-    :title="['系统用户管理',`${params.ID===0?'添加':'编辑'}系统用户`]"
-    :back="true"
-    class="ad-system-user-modify"
-  >
+  <ad-main :title="['系统用户管理',`${params.ID===0?'添加':'编辑'}系统用户`]" back class="ad-system-user-modify">
     <div class="row row-lg">
       <div class="col-sm-12 col-md-12">
         <ad-example title="用户名" des="(用户名不能包含汉字！)" required>
