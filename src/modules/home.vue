@@ -13,7 +13,10 @@
               <h5 class="mt-0">欢迎 ADOUV 登录 梦橙 通用管理系统</h5>
               <p>梦橙系统已全面升级，您现在使用的是全新 NET.SQL v3.1.2 版本</p>
               <p>梦橙系统 是一个基于最新 Web 技术的企业级通用管理系统，可以帮助企业极大的提高工作效率，节省开发成本，提升品牌形象。</p>
-              <p>如果您有何疑问、系统漏洞和不足之处，请点击右边的<a href="#" target="_blank" class="stretched-link">在线客服</a>进行咨询。</p>
+              <p>
+                如果您有何疑问、系统漏洞和不足之处，请点击右边的
+                <a href="#" target="_blank" class="stretched-link">在线客服</a>进行咨询。
+              </p>
               <a href="#" target="_blank" class="stretched-link">官网连接</a>
             </div>
           </div>

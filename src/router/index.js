@@ -18,6 +18,11 @@ const routers = [{
             name: 'home',
             component: resolve => require(['@/modules/home.vue'], resolve)
         },
+        {
+            path: '/adTest',
+            name: 'adTest',
+            component: resolve => require(['@/modules/test.vue'], resolve)
+        },
         ...systemRouter
     ]
 }, {

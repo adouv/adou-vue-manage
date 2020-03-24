@@ -60,7 +60,6 @@ export default {
 <style lang="scss">
 .ad-system-user-detail {
   .header {
-    text-align: center;
     padding-bottom: 20px;
   }
   .example-wrap {

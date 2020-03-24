@@ -1,51 +1,42 @@
 <template>
-  <ad-main :title="title" :back="true" class="ad-system-role-modify">
+  <ad-main
+    :title="['系统角色管理',`${params.ID === 0 ? '添加' : '编辑'}系统角色`]"
+    :back="true"
+    class="ad-system-role-modify"
+  >
     <div class="row row-lg">
       <div class="col-sm-12 col-md-12">
         <ad-example title="角色" required>
-          <ad-input v-model="params.Name" placeholder="请输入角色"></ad-input>
+          <a-input v-model="params.Name" placeholder="请输入角色"></a-input>
         </ad-example>
       </div>
-
-      <!-- <div class="col-sm-12 col-md-12">
-        <ad-example title="排序值">
-          <ad-input type="number" v-model="params.Sort" placeholder="请输入排序值"></ad-input>
-        </ad-example>
-      </div>-->
 
       <div class="col-sm-12 col-md-12">
         <ad-example title="菜单">
           <div class="td-tree-list" v-if="menuList.length!==0">
-            <el-tree
-              default-expand-all
-              :default-checked-keys="defaultKey"
-              :data="menuList"
-              show-checkbox
-              node-key="id"
-              ref="tree"
-              highlight-current
-              :props="defaultProps"
-            >
-              <span class="custom-tree-node" slot-scope="{ node }">
-                <span>{{ node.label }}</span>
-              </span>
-            </el-tree>
+            <a-tree
+              checkable
+              :treeData="menuList"
+              :selectedKeys="defaultKey"
+              :autoExpandParent="true"
+              v-model="params.MenuList"
+            />
           </div>
         </ad-example>
       </div>
 
       <div class="col-sm-12 col-md-12">
         <ad-example title="是否有效">
-          <ad-radio-group>
-            <ad-radio name="IsValide" label="1" v-model="params.IsValide">是</ad-radio>
-            <ad-radio name="IsValide" label="0" v-model="params.IsValide">否</ad-radio>
-          </ad-radio-group>
+          <a-radio-group v-model="params.IsValide" buttonStyle="solid" size="small">
+            <a-radio-button :value="0">否</a-radio-button>
+            <a-radio-button :value="1">是</a-radio-button>
+          </a-radio-group>
         </ad-example>
       </div>
 
       <div class="col-sm-12 col-md-12">
-        <ad-button type="secondary" @click.native="$router.go(-1);">返回</ad-button>
-        <ad-button type="primary" @click.native="btnSave()">保存</ad-button>
+        <a-button type="secondary" @click.native="$router.go(-1);">返回</a-button>
+        <a-button type="primary" @click.native="btnSave()">保存</a-button>
       </div>
     </div>
   </ad-main>
@@ -58,7 +49,6 @@ export default {
   name: "AdSystemRoleModifyComponent",
   data() {
     return {
-      title: "系统角色管理 / ",
       params: {
         ID: 0,
         Name: "",
@@ -67,16 +57,11 @@ export default {
         MenuList: []
       },
       menuList: [],
-      defaultKey: [],
-      defaultProps: {
-        children: "children",
-        label: "label"
-      }
+      defaultKey: []
     };
   },
-  created() {
-    this.title += `${this.params.ID === 0 ? "添加" : "编辑"}系统角色`;
-
+  created() {},
+  mounted() {
     let params = this.$route.params;
     if (params.ID !== undefined) {
       this.params = params;
@@ -89,7 +74,6 @@ export default {
      * 获取菜单列表
      */
     getSystemMenuList() {
-      let _this = this;
       this.menuList = [];
       this.defaultKey = [];
 
@@ -99,75 +83,56 @@ export default {
         ParentID: null
       };
 
-      adSystemMenuService.getSystemMenuList(params).then(response => {
-        if (response.length > 0) {
-          response.forEach(element => {
-            if (_this.params.MenuList.length > 0) {
-              let include = _this.params.MenuList.find(
-                e => e.ID === element.ID
-              );
-              if (include !== undefined) {
-                _this.defaultKey.push(include.ID);
-              }
-            }
-          });
+      adSystemMenuService
+        .getSystemMenuList(params)
+        .then(response => {
+          if (response.length > 0) {
+            let list = response;
 
-          let list = response;
-
-          list
-            .filter(e => e.ParentID === 0)
-            .forEach(element => {
-              _this.menuList.push({
-                id: element.ID,
-                label: element.Title,
-                pid: element.ParentID,
-                children: []
-              });
-            });
-
-          let temp = list.filter(e => e.ParentID !== 0);
-
-          _this.menuList.forEach(item => {
-            item.children = [];
-            let children = temp.filter(e => e.ParentID === item.id);
-            if (children.length > 0) {
-              children.forEach(items => {
-                item.children.push({
-                  id: items.ID,
-                  label: items.Title,
-                  pid: items.ParentID
+            list
+              .filter(e => e.ParentID === 0)
+              .forEach(element => {
+                this.menuList.push({
+                  key: element.ID,
+                  title: element.Title,
+                  children: []
                 });
               });
-            }
-          });
-        }
-      });
+
+            let temp = list.filter(e => e.ParentID !== 0);
+
+            this.menuList.forEach(item => {
+              item.children = [];
+              let children = temp.filter(e => e.ParentID === item.key);
+              if (children.length > 0) {
+                children.forEach(items => {
+                  item.children.push({
+                    key: items.ID,
+                    title: items.Title
+                  });
+                });
+              }
+            });
+          }
+          this.adSpin$.hide();
+        })
+        .catch(err => {
+          this.adSpin$.hide();
+        });
     },
+    /**
+     * 保存
+     */
     btnSave() {
-      let halfCheckMenus = this.$refs.tree.getHalfCheckedNodes();
-      let checkMenus = this.$refs.tree.getCheckedNodes();
-      // let selectMenus = halfCheckMenus.concat(checkMenus);
-      let selectMenus = checkMenus;
-
       if (!this.params.Name) {
-        this.$tip("请填写角色名称");
+        this.$message.info("请填写角色名称");
         return;
       }
 
-      // if (!this.params.Sort) {
-      //   this.params.Sort = 100;
-      // }
-
-      if (selectMenus.length === 0) {
-        this.$tip("至少选择一个菜单");
+      if (this.params.MenuList.length === 0) {
+        this.$message.info("至少选择一个菜单");
         return;
       }
-
-      this.params.MenuList = [];
-
-      selectMenus.forEach(item => {
-        this.params.MenuList.push(item.id);
-      });
 
       let result = null;
 
@@ -179,9 +144,9 @@ export default {
 
       result.then(response => {
         if (response > 0 && response !== null) {
-          this.$tip("保存成功");
+          this.$message.info("保存成功");
         } else {
-          this.$tip("保存失败");
+          this.$message.error("保存失败");
         }
         this.$router.go(-1);
       });
