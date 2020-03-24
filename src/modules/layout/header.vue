@@ -52,8 +52,8 @@
               role="button"
             >
               <span class="avatar avatar-online">
-                <img src="http://cdn.admui.com/demo/iframe/2.1.0/images/avatar.svg" alt="..." />
-                <i></i>
+                <img :src="user.Avatar" alt="..." />
+                <i>{{user.UserName}}</i>
               </span>
             </a>
             <div class="dropdown-menu dropdown-menu-personal-info shadow" role="menu">
@@ -177,8 +177,18 @@ export default {
     return {
       showLeftIcon: true,
       showMenuIcon: false,
-      sidebarWidth: 240
+      sidebarWidth: 240,
+      user: {
+        UserName: "",
+        Avatar: ""
+      }
     };
+  },
+  mounted() {
+    this.user = this.local$.getUser();
+    if (!this.user.Avatar) {
+      this.user.Avatar = require("../../assets/images/user9-200x200.png");
+    }
   },
   methods: {
     showMenuHandller(type) {

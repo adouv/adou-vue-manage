@@ -4,7 +4,7 @@
       <div class="tab-content h-full">
         <div class="tab-pane animation-fade h-full active auto-scroll" role="tabpanel">
           <ul class="site-menu">
-            <li class="site-menu-category">梦橙通用管理系统</li>
+            <li class="site-menu-category"></li>
             <li class="site-menu-item" v-for="(item,index) in list" :key="index">
               <a href="javascript:void(0);" @click="showSubMenuHandller(item);">
                 <i class="fa fa-bandcamp"></i>
@@ -32,10 +32,18 @@ export default {
   name: "AdLayoutSidebarComponent",
   data() {
     return {
-      list: []
+      list: [],
+      user: {
+        Avatar: ""
+      }
     };
   },
   mounted() {
+    this.user = this.local$.getUser();
+    if (!this.user.Avatar) {
+      this.user.Avatar = require("../../assets/images/user9-200x200.png");
+    }
+
     this.getSystemMenuListByUser();
   },
   methods: {
