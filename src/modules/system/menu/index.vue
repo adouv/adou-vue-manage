@@ -1,89 +1,78 @@
 <template>
-  <ad-main title="系统菜单管理" class="ad-system-menu">
+  <ad-main :title="['系统菜单管理']" class="ad-system-menu">
     <div class="row row-lg">
       <div class="col-sm-12 col-md-12">
-        <ad-button type="inverse" @click.native="getAdSystemMenuList()">搜索</ad-button>
-        <ad-button @click.native="$router.push({name:'adSysMenuModify'})">添加</ad-button>
+        <a-button type="inverse" @click.native="getAdSystemMenuList()">刷新</a-button>
+        <a-button type="primary" @click.native="$router.push({name:'adSysMenuModify'})">添加</a-button>
       </div>
     </div>
 
-    <div class="table-box">
-      <el-table
-        :data="list"
-        size="medium"
-        stripe
-        style="width: 100%;"
-        row-key="id"
-        :default-expand-all="false"
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-      >
-        <el-table-column prop="title" label="菜单名称">
-          <template slot-scope="scope">{{scope.row.title}}</template>
-        </el-table-column>
-        <el-table-column prop="url" label="菜单地址">
-          <template slot-scope="scope">
-            <el-tooltip
-              v-if="scope.row.url!=='#'"
-              class="item"
-              effect="dark"
-              :content="`${scope.row.url}${scope.row.otherId?'/'+scope.row.otherId:''}`"
-              placement="top"
-            >
-              <el-link type="primary" size="mini">查看地址</el-link>
-            </el-tooltip>
-            <span v-if="scope.row.url==='#'">#</span>
+    <a-table :columns="columns" :dataSource="list" style="margin-top:20px">
+      <!---->
+      <template slot="Title" slot-scope="text,record">{{record.Title}}({{record.ID}})</template>
+      <!---->
+      <template slot="Url" slot-scope="text">
+        <a-tooltip placement="top">
+          <template slot="title">
+            <span>{{text}}</span>
           </template>
-        </el-table-column>
-        <el-table-column prop="isValide" label="是否有效" width="100">
-          <template slot-scope="scope">
-            <el-switch
-              size="mini"
-              v-model="scope.row.isValideCheck"
-              @change="isValideChangeHandller(scope.row)"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-            ></el-switch>
-          </template>
-        </el-table-column>
-        <el-table-column prop="sort" label="排序" width="100">
-          <template slot-scope="scope">
-            <ad-input
-              v-model="scope.row.sort"
-              @blur.native.capture="sortBlurHandller(scope.row)"
-              style="width:50px;text-align:center;"
-            ></ad-input>
-          </template>
-        </el-table-column>
-        <el-table-column prop="type" label="类型" width="100">
-          <template slot-scope="scope">
-            <el-tag size="mini" v-if="scope.row.type<-1" type="warning">菜单(系统内部)</el-tag>
-            <el-tag size="mini" v-if="scope.row.type==-1" type="info">目录(系统内部)</el-tag>
-            <el-tag size="mini" v-if="scope.row.type==0" type="success">目录</el-tag>
-            <el-tag size="mini" v-if="scope.row.type==1" type="warning">菜单</el-tag>
-            <el-tag size="mini" v-if="scope.row.type==2" type="danger">按钮</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="modifyTime" label="更新时间" width="100">
-          <template slot-scope="scope">{{ scope.row.modifyTime|dateFormats }}</template>
-        </el-table-column>
-        <el-table-column label="操作" width="150">
-          <template slot-scope="scope">
-            <ad-button
-              type="danger"
-              v-if="scope.row.type>=0"
-              @click.native="btnDeleteHandller(scope.row);"
-            >删除</ad-button>
-            <ad-button v-if="scope.row.type>=0" @click.native="btnModifyHandller(scope.row);">编辑</ad-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+          <a href="javascript:;">链接</a>
+        </a-tooltip>
+      </template>
+      <!---->
+      <template slot="IsValide" slot-scope="text,record">
+        <a-switch
+          v-model="record.IsValideCheck"
+          @change="isValideChangeHandller(record)"
+          checkedChildren="有效"
+          unCheckedChildren="无效"
+        ></a-switch>
+      </template>
+      <!---->
+      <template slot="Sort" slot-scope="text,record">
+        <a-input
+          v-model="record.Sort"
+          @blur.native.capture="sortBlurHandller(record)"
+          style="width:50px;text-align:center;"
+        ></a-input>
+      </template>
+      <!---->
+      <template slot="Type" slot-scope="text,record">
+        <a-tag v-if="record.Type<-1" color="#f50">菜单(系统内部)</a-tag>
+        <a-tag v-if="record.Type==-1" color="#2db7f5">目录(系统内部)</a-tag>
+        <a-tag v-if="record.Type==0" color="#87d068">目录</a-tag>
+        <a-tag v-if="record.Type==1" color="#108ee9">菜单</a-tag>
+        <a-tag v-if="record.Type==2" color="purple">按钮</a-tag>
+      </template>
+      <!---->
+      <template slot="Operating" slot-scope="text,record">
+        <a-button
+          type="primary"
+          v-if="!record.children"
+          size="small"
+          @click.native="btnOperationHandller(record);"
+        >操作权限</a-button>
+        <a-button
+          type="danger"
+          size="small"
+          v-if="!record.children && record.Type>=0"
+          @click.native="btnDeleteHandller(record);"
+        >删除</a-button>
+        <a-button
+          type="primary"
+          v-if="record.Type>=0"
+          size="small"
+          @click.native="btnModifyHandller(record);"
+        >编辑</a-button>
+      </template>
+    </a-table>
   </ad-main>
 </template>
 
 <script>
 import adTreeService from "../../../service/adTreeService";
 import adSystemMenuService from "../../../service/adSystemMenuService";
+import AdSystemMenuOperationComponent from "./operation.vue";
 export default {
   name: "AdSystemMenuComponent",
   data() {
@@ -97,6 +86,56 @@ export default {
         OrderBy: "Sort",
         IsDesc: false
       },
+      columns: [
+        {
+          title: "菜单名称",
+          dataIndex: "Title",
+          key: "Title",
+          scopedSlots: {
+            customRender: "Title"
+          }
+        },
+        {
+          title: "菜单地址",
+          dataIndex: "Url",
+          key: "Url",
+          scopedSlots: {
+            customRender: "Url"
+          }
+        },
+        {
+          title: "是否有效",
+          dataIndex: "IsValide",
+          key: "IsValide",
+          scopedSlots: {
+            customRender: "IsValide"
+          }
+        },
+        {
+          title: "排序",
+          dataIndex: "Sort",
+          key: "Sort",
+          scopedSlots: {
+            customRender: "Sort"
+          }
+        },
+        {
+          title: "类型",
+          dataIndex: "Type",
+          key: "Type",
+          scopedSlots: {
+            customRender: "Type"
+          }
+        },
+        {
+          title: "操作",
+          dataIndex: "Operating",
+          key: "Operating",
+          scopedSlots: {
+            customRender: "Operating"
+          }
+        }
+      ],
       list: []
     };
   },
@@ -112,7 +151,7 @@ export default {
 
       adSystemMenuService.getSystemMenuList(this.params).then(response => {
         if (response && response.length > 0) {
-          this.list = adTreeService.getMenuTreeList(response, 0);
+          this.list = this.utils$.getTreeData(response, 0);
         }
       });
     },
@@ -120,24 +159,25 @@ export default {
      * 排序字段鼠标离开回调事件
      */
     sortBlurHandller(item) {
-      if (!item.sort) {
+      if (!item.Sort) {
         return;
       }
 
-      if (isNaN(item.sort)) {
-        this.$tip("排序必须是数字");
+      if (isNaN(item.Sort)) {
+        this.$message.info("排序必须是数字");
         return;
       }
 
-      if (item.sort < 0) {
-        this.$tip("排序不能小于0");
+      if (item.Sort < 0) {
+        this.$message.info("排序不能小于0");
         return;
       }
 
       let params = {
-        ID: item.id,
-        Sort: item.sort
+        ID: item.ID,
+        Sort: item.Sort
       };
+
       adSystemMenuService.updateSystemMenuSortByID(params).then(response => {
         this.getAdSystemMenuList();
       });
@@ -147,8 +187,8 @@ export default {
      */
     isValideChangeHandller(item) {
       let params = {
-        ID: item.id,
-        IsValide: item.isValideCheck ? 1 : 0
+        ID: item.ID,
+        IsValide: item.IsValideCheck ? 1 : 0
       };
 
       adSystemMenuService
@@ -156,20 +196,57 @@ export default {
         .then(response => {
           if (response > 0) {
             if (params.IsValide === 1) {
-              this.$tip("已设置为有效");
+              this.$message.info("已设置为有效");
             } else {
-              this.$tip("已设置为无效");
+              this.$message.info("已设置为无效");
             }
           } else {
-            this.$tip("设置失败");
+            this.$message.error("设置失败");
           }
         });
+    },
+    /**
+     * 设置操作权限
+     */
+    async btnOperationHandller(item) {
+      console.log(item);
+      item.OperationList = [];
+
+      try {
+        let params = {
+          ParentID: item.ID,
+          IsDel: 1,
+          IsValide: 1,
+          OrderBy: "Sort",
+          IsDesc: false
+        };
+
+        let result = await adSystemMenuService.getSystemMenuList(params);
+
+        if (result.length > 0) {
+          item.OperationList = result;
+        }
+
+        this.adModal$({
+          visible: true,
+          title: `${item.Title} - 操作权限设置`,
+          cancelText: "关闭",
+          componentName: AdSystemMenuOperationComponent,
+          params: item,
+          okHandller: (options, close) => {
+            console.log(options.params);
+          }
+        });
+      } catch (error) {
+        this.adSpin$.hide();
+      }
     },
     /**
      * 编辑
      */
     btnModifyHandller(item) {
-      console.log(item);
+      this.adSpin$.show({ tip: "正在加载..." });
+
       this.$router.push({ name: "adSysMenuModify", params: item });
     },
     /**

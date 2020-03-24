@@ -33,6 +33,22 @@ const routers = [{
         },
         component: resolve => require(['@/modules/system/role/modify'], resolve)
     },
+    {
+        path: '/adSysMenu',
+        name: 'adSysMenu',
+        meta: {
+            title: "系统管理 - 菜单管理"
+        },
+        component: resolve => require(['@/modules/system/menu/index'], resolve)
+    },
+    {
+        path: '/adSysMenuModify',
+        name: 'adSysMenuModify',
+        meta: {
+            title: "系统管理 - 编辑菜单"
+        },
+        component: resolve => require(['@/modules/system/menu/modify'], resolve)
+    },
 ];
 
 export default routers;

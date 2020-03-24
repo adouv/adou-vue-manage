@@ -71,5 +71,27 @@ export default {
             return itemArr;
         };
         return getJsonTree(data, pid);
+    },
+    getTreeData(data, pid) {
+        let getJsonTree = function(data, pid) {
+            let itemArr = [];
+            let childList = [];
+            if (data.length > 0) {
+                data.forEach(item => {
+                    if (item.ParentID === pid) {
+                        let newNode = item;
+                        newNode.key = item.ID;
+                        newNode.IsValideCheck = item.IsValide === 1;
+                        childList = getJsonTree(data, item.ID);
+                        if (childList.length > 0) {
+                            newNode.children = childList;
+                        }
+                        itemArr.push(newNode);
+                    }
+                });
+            }
+            return itemArr;
+        };
+        return getJsonTree(data, pid);
     }
 }

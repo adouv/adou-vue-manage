@@ -10,9 +10,9 @@
       <div class="col-sm-6 col-md-4">
         <ad-example title="是否有效">
           <ad-select name="IsValide" v-model="params.IsValide">
-            <option value="-1">全部</option>
-            <option value="0">否</option>
-            <option value="1">是</option>
+            <option :value="-1">全部</option>
+            <option :value="0">否</option>
+            <option :value="1">是</option>
           </ad-select>
         </ad-example>
       </div>

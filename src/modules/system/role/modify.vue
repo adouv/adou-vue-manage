@@ -20,7 +20,7 @@
               :selectedKeys="defaultKey"
               :autoExpandParent="true"
               v-model="params.MenuList"
-            />
+            ></a-tree>
           </div>
         </ad-example>
       </div>

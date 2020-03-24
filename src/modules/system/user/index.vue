@@ -10,9 +10,9 @@
       <div class="col-sm-6 col-md-4">
         <ad-example title="是否超级管理员">
           <ad-select name="UserType" v-model="params.UserType">
-            <option value="-1">全部</option>
-            <option value="0">否</option>
-            <option value="1">是</option>
+            <option :value="-1">全部</option>
+            <option :value="0">否</option>
+            <option :value="1">是</option>
           </ad-select>
         </ad-example>
       </div>
@@ -20,9 +20,9 @@
       <div class="col-sm-6 col-md-4">
         <ad-example title="用户状态">
           <ad-select name="UserStatus" v-model="params.UserStatus">
-            <option value="-1">全部</option>
-            <option value="0">禁用</option>
-            <option value="1">启用</option>
+            <option :value="-1">全部</option>
+            <option :value="0">禁用</option>
+            <option :value="1">启用</option>
           </ad-select>
         </ad-example>
       </div>
