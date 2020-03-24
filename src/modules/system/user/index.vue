@@ -176,9 +176,9 @@ export default {
           this.params.PageIndex = response.CurrentPage;
           if (response.Items.length > 0) {
             response.Items.forEach(element => {
-              element.Avatar =
-                require("../../../assets/images/user9-200x200.png") ||
-                element.Avatar;
+              if (!element.Avatar) {
+                element.Avatar = require("../../../assets/images/user9-200x200.png");
+              }
               element.UserStatusCheck = element.UserStatus === 1;
               this.list.push(element);
             });

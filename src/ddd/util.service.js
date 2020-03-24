@@ -13,6 +13,16 @@ export default {
         return parseInt(date.getFullYear()) - parseInt(oldDate.getFullYear());
     },
     /**
+     * 获取文件base64
+     * @param {*} img 
+     * @param {*} callback 
+     */
+    getBase64(img, callback) {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(img);
+    },
+    /**
      * 获取菜单树列表
      * @param {*} data 
      * @param {*} pid 

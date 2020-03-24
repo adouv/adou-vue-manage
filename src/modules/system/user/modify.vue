@@ -11,16 +11,11 @@
         </ad-example>
       </div>
 
-      <!-- <div class="col-sm-12 col-md-12">
+      <div class="col-sm-12 col-md-12">
         <ad-example title="用户头像">
-          <ad-upload-button
-            label="上传头像"
-            :params="uploadParams"
-            :beforeCallback="uploadBeforeHandller"
-            :uploadCallback="uploadHandller"
-          ></ad-upload-button>
+          <ad-upload-avatar name="avatar" v-model="params.Avatar"></ad-upload-avatar>
         </ad-example>
-      </div>-->
+      </div>
 
       <div class="col-sm-12 col-md-12">
         <ad-example title="密码" required>
@@ -33,12 +28,6 @@
           <a-input type="password" v-model="params.UserPwdConfirm" placeholder="请输入确认密码"></a-input>
         </ad-example>
       </div>
-
-      <!-- <div class="col-sm-12 col-md-12">
-        <ad-example title="排序值">
-          <ad-input type="number" v-model="params.Sort" placeholder="请输入排序值"></ad-input>
-        </ad-example>
-      </div>-->
 
       <div class="col-sm-12 col-md-12">
         <ad-example title="是否超级管理员">
@@ -100,9 +89,6 @@ export default {
         RoleList: [],
         Sort: 100
       },
-      uploadParams: {
-        fileType: "image"
-      },
       roleList: [],
       defaultKey: []
     };
@@ -150,19 +136,6 @@ export default {
       }
     },
     /**
-     *
-     */
-    uploadBeforeHandller(event) {
-      console.log(event);
-      return true;
-    },
-    /**
-     *
-     */
-    uploadHandller(event) {
-      console.log(event);
-    },
-    /**
      * 保存
      */
     btnSave() {
@@ -204,10 +177,6 @@ export default {
         }
       }
 
-      // if (!this.params.Sort) {
-      //   this.params.Sort = 100;
-      // }
-
       if (this.params.UserType == 0) {
         if (this.params.RoleList.length === 0) {
           this.$message.info("至少选择一个角色");
@@ -218,8 +187,8 @@ export default {
         this.params.RoleList = [];
       }
 
-      this.params.UserType = parseInt(this.params.UserType);
-      this.params.UserStatus = parseInt(this.params.UserStatus);
+      this.params.UserType = this.params.UserType;
+      this.params.UserStatus = this.params.UserStatus;
 
       let result = null;
 
