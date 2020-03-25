@@ -1,35 +1,34 @@
 <template>
   <div class="ad-system-menu-operation">
-    <a-alert message="点击图标进行选择" banner style="margin-bottom:20px" />
-    <a-form>
-      <a-form-item v-for="(item,index) in list" :key="index">
-        <div style="display:flex;align-items:center">
-          <a-avatar shape="square" size="large" style="cursor:pointer">
-            <i :class="item.Icon"></i>
-          </a-avatar>
-          <a-input
-            v-model="item.Title"
-            placeholder="请输入权限名称"
-            style="margin-left:10px; margin-right: 10px"
-          ></a-input>
-          <a-icon
-            v-if="list.length > 1"
-            class="dynamic-delete-button"
-            type="minus-circle-o"
-            :disabled="list.length === 1"
-          />
-        </div>
-      </a-form-item>
-      <a-form-item>
-        <a-button type="dashed" style="width:100%" @click="add">
-          <a-icon type="plus" />添加
-        </a-button>
-      </a-form-item>
-    </a-form>
+    <div class="row row-lg">
+      <div class="col-sm-12 col-md-12" v-for="(item,index) in list" :key="index">
+        <ad-example title>
+          <div style="display:flex;align-items:center;">
+            <a-input v-model="item.Title" placeholder="按钮名称" style="margin:0px 10px"></a-input>
+            <a-input v-model="item.Perms" placeholder="权限标识" style="margin:0px 10px"></a-input>
+            <a-icon
+              v-if="list.length > 1"
+              class="dynamic-delete-button"
+              type="minus-circle-o"
+              @click="remove(item,index);"
+            />
+          </div>
+        </ad-example>
+      </div>
+
+      <div class="col-sm-12 col-md-12">
+        <ad-example title>
+          <a-button type="dashed" style="width: 100%" @click="add">
+            <a-icon type="plus" />增加权限
+          </a-button>
+        </ad-example>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import adSystemMenuService from "../../../service/adSystemMenuService";
 export default {
   name: "AdSystemMenuOperationComponent",
   props: {
@@ -55,15 +54,46 @@ export default {
         Url: "",
         Path: "",
         OtherID: 0,
-        ParentID: 0,
+        ParentID: this.params.ID,
         LevelID: 0,
-        Type: 0,
+        Type: 2,
         Perms: "",
         Sort: 100,
         IsValide: 1,
         IsDel: 1
       });
+    },
+    remove(item, index) {
+      this.list.splice(index, 1);
+    },
+    btnSave() {
+      if (this.params.OperationList.length === 0) {
+        this.$message.info("请增加权限");
+        return;
+      }
+
+      let resultList = [];
+
+      this.params.OperationList.forEach(item => {
+        if (item.ID === 0) {
+          resultList.push(adSystemMenuService.addSystemMenu(item));
+        } else {
+          resultList.push(adSystemMenuService.updateSystemMenuByID(item));
+        }
+      });
+
+      Promise.all(resultList).then(response => {
+        console.log(response);
+      });
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.ad-system-menu-operation {
+  .example-wrap {
+    margin-bottom: 10px !important;
+  }
+}
+</style>

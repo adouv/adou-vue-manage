@@ -1,8 +1,9 @@
 /**
  * 系统管理 - 路由管理
  */
+
 const routers = [{
-        path: '/adSysUser',
+        path: '/system/adSysUser',
         name: 'adSysUser',
         meta: {
             title: "系统管理 - 用户管理"
@@ -10,7 +11,7 @@ const routers = [{
         component: resolve => require(['@/modules/system/user/index'], resolve)
     },
     {
-        path: '/adSysUserModify',
+        path: '/system/adSysUserModify',
         name: 'adSysUserModify',
         meta: {
             title: "系统管理 - 编辑用户"
@@ -18,7 +19,7 @@ const routers = [{
         component: resolve => require(['@/modules/system/user/modify'], resolve)
     },
     {
-        path: '/adSysRole',
+        path: '/system/adSysRole',
         name: 'adSysRole',
         meta: {
             title: "系统管理 - 角色管理"
@@ -26,7 +27,7 @@ const routers = [{
         component: resolve => require(['@/modules/system/role/index'], resolve)
     },
     {
-        path: '/adSysRoleModify',
+        path: '/system/adSysRoleModify',
         name: 'adSysRoleModify',
         meta: {
             title: "系统管理 - 编辑角色"
@@ -34,7 +35,7 @@ const routers = [{
         component: resolve => require(['@/modules/system/role/modify'], resolve)
     },
     {
-        path: '/adSysMenu',
+        path: '/system/adSysMenu',
         name: 'adSysMenu',
         meta: {
             title: "系统管理 - 菜单管理"
@@ -42,13 +43,21 @@ const routers = [{
         component: resolve => require(['@/modules/system/menu/index'], resolve)
     },
     {
-        path: '/adSysMenuModify',
+        path: '/system/adSysMenuModify',
         name: 'adSysMenuModify',
         meta: {
             title: "系统管理 - 编辑菜单"
         },
         component: resolve => require(['@/modules/system/menu/modify'], resolve)
     },
+    {
+        path: '/system/adSysMenuOperation',
+        name: 'adSysMenuOperation',
+        meta: {
+            title: "系统管理 - 菜单权限"
+        },
+        component: resolve => require(['@/modules/system/menu/operation'], resolve)
+    }
 ];
 
 export default routers;

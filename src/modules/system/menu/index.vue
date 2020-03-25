@@ -1,5 +1,5 @@
 <template>
-  <ad-main :title="['系统菜单管理']" class="ad-system-menu">
+  <ad-main :title="['系统菜单管理']">
     <div class="row row-lg">
       <div class="col-sm-12 col-md-12">
         <a-button type="inverse" @click.native="getAdSystemMenuList()">刷新</a-button>
@@ -7,63 +7,45 @@
       </div>
     </div>
 
-    <a-table :columns="columns" :dataSource="list" style="margin-top:20px">
+    <a-table
+      class="ant-tree-table"
+      :columns="columns"
+      :dataSource="list"
+      :pagination="false"
+      style="margin-top:20px"
+    >
       <!---->
       <template slot="Title" slot-scope="text,record">{{record.Title}}({{record.ID}})</template>
       <!---->
-      <template slot="Url" slot-scope="text">
-        <a-tooltip placement="top">
-          <template slot="title">
-            <span>{{text}}</span>
-          </template>
-          <a href="javascript:;">链接</a>
-        </a-tooltip>
-      </template>
-      <!---->
       <template slot="IsValide" slot-scope="text,record">
-        <a-switch
-          v-model="record.IsValideCheck"
-          @change="isValideChangeHandller(record)"
-          checkedChildren="有效"
-          unCheckedChildren="无效"
-        ></a-switch>
-      </template>
-      <!---->
-      <template slot="Sort" slot-scope="text,record">
-        <a-input
-          v-model="record.Sort"
-          @blur.native.capture="sortBlurHandller(record)"
-          style="width:50px;text-align:center;"
-        ></a-input>
-      </template>
-      <!---->
-      <template slot="Type" slot-scope="text,record">
-        <a-tag v-if="record.Type<-1" color="#f50">菜单(系统内部)</a-tag>
-        <a-tag v-if="record.Type==-1" color="#2db7f5">目录(系统内部)</a-tag>
-        <a-tag v-if="record.Type==0" color="#87d068">目录</a-tag>
-        <a-tag v-if="record.Type==1" color="#108ee9">菜单</a-tag>
-        <a-tag v-if="record.Type==2" color="purple">按钮</a-tag>
+        <span>{{record.IsValide===1?'是':'否'}}</span>
       </template>
       <!---->
       <template slot="Operating" slot-scope="text,record">
         <a-button
           type="primary"
-          v-if="!record.children"
           size="small"
+          icon="setting"
+          title="设置操作权限"
+          v-if="record.Type===1"
           @click.native="btnOperationHandller(record);"
-        >操作权限</a-button>
+        ></a-button>
         <a-button
           type="danger"
           size="small"
-          v-if="!record.children && record.Type>=0"
+          icon="delete"
+          v-if="record.Type>=0"
+          title="删除"
           @click.native="btnDeleteHandller(record);"
-        >删除</a-button>
+        ></a-button>
         <a-button
           type="primary"
-          v-if="record.Type>=0"
+          icon="edit"
           size="small"
+          title="编辑"
+          v-if="record.Type>=0"
           @click.native="btnModifyHandller(record);"
-        >编辑</a-button>
+        ></a-button>
       </template>
     </a-table>
   </ad-main>
@@ -104,6 +86,14 @@ export default {
           }
         },
         {
+          title: "权限标识",
+          dataIndex: "Perms",
+          key: "Perms",
+          scopedSlots: {
+            customRender: "Perms"
+          }
+        },
+        {
           title: "是否有效",
           dataIndex: "IsValide",
           key: "IsValide",
@@ -117,14 +107,6 @@ export default {
           key: "Sort",
           scopedSlots: {
             customRender: "Sort"
-          }
-        },
-        {
-          title: "类型",
-          dataIndex: "Type",
-          key: "Type",
-          scopedSlots: {
-            customRender: "Type"
           }
         },
         {
@@ -209,7 +191,6 @@ export default {
      * 设置操作权限
      */
     async btnOperationHandller(item) {
-      console.log(item);
       item.OperationList = [];
 
       try {
@@ -234,7 +215,26 @@ export default {
           componentName: AdSystemMenuOperationComponent,
           params: item,
           okHandller: (options, close) => {
-            console.log(options.params);
+            let args = options.params;
+            if (args.OperationList.length === 0) {
+              this.$message.info("请增加权限");
+              return;
+            }
+
+            let resultList = [];
+
+            args.OperationList.forEach(item => {
+              if (item.ID === 0) {
+                resultList.push(adSystemMenuService.addSystemMenu(item));
+              } else {
+                resultList.push(adSystemMenuService.updateSystemMenuByID(item));
+              }
+            });
+
+            Promise.all(resultList).then(response => {
+              close();
+              this.getAdSystemMenuList();
+            });
           }
         });
       } catch (error) {
@@ -253,51 +253,35 @@ export default {
      * 删除
      */
     btnDeleteHandller(item) {
-      let _this = this;
-      let options = {};
-      options.title = "确认提示";
-      options.message = "确认要删除吗？";
-      options.params = {
-        ID: item.id,
-        IsDel: 0
-      };
-      options.save = (params, close) => {
-        adSystemMenuService.updateSystemMenuIsDelByID(params).then(response => {
-          if (response > 0) {
-            _this.$tip("删除成功");
-            _this.getAdSystemMenuList();
-          } else {
-            _this.$tip("删除失败");
-          }
-          close();
-        });
-      };
+      if (item.hasSub) {
+        this.$message.info("请先删除子栏目");
+        return;
+      }
 
-      this.confirm$(options);
+      this.$confirm({
+        title: "提示",
+        content: "确定要删除吗?",
+        okText: "确认",
+        cancelText: "取消",
+        onOk: () => {
+          let params = {
+            ID: item.ID,
+            IsDel: 0
+          };
+          adSystemMenuService
+            .updateSystemMenuIsDelByID(params)
+            .then(response => {
+              if (response > 0) {
+                this.$message.info("删除成功");
+                this.getAdSystemMenuList();
+              } else {
+                this.$message.info("删除失败");
+              }
+            });
+        }
+      });
     }
   }
 };
 </script>
 
-<style lang="scss">
-.ad-system-menu {
-  .table-box {
-    margin-top: 20px;
-    overflow-y: auto;
-  }
-  .el-table__header {
-    th {
-      font-weight: normal !important;
-    }
-  }
-  .el-table {
-    td {
-      font-size: 12px !important;
-      .cell,
-      .el-link--inner {
-        font-size: 12px !important;
-      }
-    }
-  }
-}
-</style>

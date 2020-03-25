@@ -1,28 +1,38 @@
 <template>
-  <ad-main
-    :title="['系统菜单管理',`${params.ID === 0 ? '添加' : '编辑'}系统菜单`]"
-    back
-    class="ad-system-menu-modify"
-  >
+  <ad-main :title="['系统菜单管理',`${params.ID === 0 ? '添加' : '编辑'}系统菜单`]" back>
     <div class="row row-lg">
+      <div class="col-sm-12 col-md-12">
+        <ad-example title="菜单类型" required>
+          <a-radio-group v-model="params.Type" buttonStyle="solid">
+            <a-radio-button :value="0">目录</a-radio-button>
+            <a-radio-button :value="1">菜单</a-radio-button>
+          </a-radio-group>
+        </ad-example>
+      </div>
       <div class="col-sm-12 col-md-12">
         <ad-example title="菜单名称" required>
           <a-input v-model="params.Title" placeholder="请输入菜单名称"></a-input>
         </ad-example>
       </div>
 
-      <div class="col-sm-12 col-md-12">
-        <ad-example title="父级" required>
+      <div class="col-sm-12 col-md-12" v-if="params.Type===1">
+        <ad-example title="上级栏目" required>
           <ad-select name="ParentID" v-model="params.ParentID">
-            <option :value="0">根目录</option>
+            <option :value="0">顶级类目</option>
             <option v-for="(item,index) in menuList" :key="index" :value="item.ID">{{item.Title}}</option>
           </ad-select>
         </ad-example>
       </div>
 
       <div class="col-sm-12 col-md-12">
-        <ad-example title="地址" required>
-          <a-input v-model="params.Url" placeholder="请输入地址"></a-input>
+        <ad-example title="路由地址" required>
+          <a-input v-model="params.Url" placeholder="请输入路由地址"></a-input>
+        </ad-example>
+      </div>
+
+      <div class="col-sm-12 col-md-12" v-if="params.Type===1">
+        <ad-example title="权限标识" required>
+          <a-input v-model="params.Perms" placeholder="请输入权限标识"></a-input>
         </ad-example>
       </div>
 
@@ -147,7 +157,7 @@ export default {
 
       let result = null;
 
-      if (model.ID === 0) {
+      if (this.params.ID === 0) {
         result = adSystemMenuService.addSystemMenu(this.params);
       } else {
         result = adSystemMenuService.updateSystemMenuByID(this.params);

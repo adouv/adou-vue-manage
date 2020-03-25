@@ -86,6 +86,12 @@ export default {
                         if (childList.length > 0) {
                             newNode.children = childList;
                         }
+                        if (newNode.children !== undefined) {
+                            newNode.hasSub = newNode.children.length > 0;
+                        } else {
+                            newNode.hasSub = false;
+                        }
+
                         itemArr.push(newNode);
                     }
                 });
