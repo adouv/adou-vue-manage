@@ -50,7 +50,7 @@ export default {
       this.list.push({
         ID: 0,
         Title: "",
-        Icon: "fa fa-file-image-o",
+        Icon: "",
         Url: "",
         Path: "",
         OtherID: 0,

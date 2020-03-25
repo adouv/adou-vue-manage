@@ -71,10 +71,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../../assets/scss/ddd/mixin.scss";
 .ad-icon-list-base {
   width: 100%;
   height: 200px;
   overflow-y: auto;
+  @include scroll-bar(3px);
   .icon-list {
     display: flex;
     flex-wrap: wrap;

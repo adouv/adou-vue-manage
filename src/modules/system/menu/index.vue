@@ -15,8 +15,6 @@
       style="margin-top:20px"
     >
       <!---->
-      <template slot="Title" slot-scope="text,record">{{record.Title}}({{record.ID}})</template>
-      <!---->
       <template slot="Icon" slot-scope="text">
         <i :class="text"></i>
       </template>
