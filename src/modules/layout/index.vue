@@ -20,6 +20,10 @@ export default {
   components: {
     "ad-header": AdLayoutHeaderComponent,
     "ad-sidebar": AdLayoutSidebarComponent
-  }
+  },
+  data() {
+    return {};
+  },
+  methods: {}
 };
 </script>

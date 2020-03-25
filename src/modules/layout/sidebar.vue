@@ -1,5 +1,5 @@
 <template>
-  <nav class="site-menubar site-menubar-dark ad-layout-sidebar">
+  <nav class="site-menubar site-menubar-dark ad-layout-sidebar ad-layout-sidebar-mobild">
     <div class="site-menubar-body">
       <div class="tab-content h-full">
         <div class="tab-pane animation-fade h-full active auto-scroll" role="tabpanel">
@@ -101,9 +101,13 @@ export default {
      * 页面跳转
      */
     toPathHandller(item) {
-      console.log(item);
       this.local$.removeItem("LEFT_SIDEBAR_ITEM");
       this.local$.setItem("LEFT_SIDEBAR_ITEM", JSON.stringify(item));
+      if (!$("body").hasClass("site-mobile-menubar")) {
+        $("body").addClass("site-mobile-menubar");
+      } else {
+        $("body").removeClass("site-mobile-menubar");
+      }
       if (item.otherId) {
         this.$router.push({ path: `/${item.url}/${item.otherId}` });
       } else {

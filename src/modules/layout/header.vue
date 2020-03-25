@@ -9,8 +9,8 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <i class="icon ti-arrow-left" v-show="showLeftIcon" @click="showMenuHandller('left');"></i>
-        <i class="icon ti-menu" v-show="showMenuIcon" @click="showMenuHandller('menu');"></i>
+        <!-- <i class="icon ti-arrow-left" v-show="showLeftIcon" @click="showMenuHandller('left');"></i> -->
+        <i class="icon ti-menu" @click="showMenuHandller();"></i>
       </button>
       <div class="navbar-brand">
         <p>
@@ -175,14 +175,17 @@ export default {
   name: "AdLayoutHeaderComponent",
   data() {
     return {
-      showLeftIcon: true,
-      showMenuIcon: false,
-      sidebarWidth: 240,
+      sidebarWidth: 0,
       user: {
         UserName: "",
         Avatar: ""
       }
     };
+  },
+  watch: {
+    minSidebarWidth(val) {
+      this.sidebarWidth = val;
+    }
   },
   mounted() {
     this.user = this.local$.getUser();
@@ -191,20 +194,25 @@ export default {
     }
   },
   methods: {
+    /**
+     * 手机端，左侧菜单显示隐藏
+     */
     showMenuHandller(type) {
-      if (type === "left") {
-        this.showLeftIcon = false;
-        this.showMenuIcon = true;
-        $(".ad-layout-sidebar").animate({ left: "0px" });
+      if (!$("body").hasClass("site-mobile-menubar")) {
+        $("body").addClass("site-mobile-menubar");
       } else {
-        this.showLeftIcon = true;
-        this.showMenuIcon = false;
-        $(".ad-layout-sidebar").animate({ left: `-${this.sidebarWidth}px` });
+        $("body").removeClass("site-mobile-menubar");
       }
     },
+    /**
+     * PC端左侧菜单显示隐藏
+     */
     showToolsHandller() {
       $(".navbar-nav-right").toggle();
     },
+    /**
+     * PC端显示菜单为文件夹样式事件
+     */
     toggleHandller(type) {
       if (type === "fold") {
         $("body").removeClass("site-menubar-unfold");
