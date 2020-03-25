@@ -5,6 +5,7 @@ import { adResultBaseInstall } from "./base/adResult/index";
 import { adExampleBaseInstall } from "./base/adExample/index";
 import { adSelectBaseInstall } from "./base/adSelect/index";
 import { adUploadAvatarBaseInstall } from "./base/adUploadAvatar/index";
+import { adIconListBaseInstall } from "./base/adIconList/index";
 //工具组件
 import { adModalToolInstall } from "./tools/adModal/index";
 import { adSpinToolInstall } from "./tools/adSpin/index";
@@ -19,6 +20,7 @@ export const AdComponentInstall = Vue => {
     adExampleBaseInstall(Vue);
     adSelectBaseInstall(Vue);
     adUploadAvatarBaseInstall(Vue);
+    adIconListBaseInstall(Vue);
     //工具组件
     adModalToolInstall(Vue);
     adSpinToolInstall(Vue);

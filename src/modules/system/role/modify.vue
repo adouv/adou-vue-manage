@@ -87,32 +87,7 @@ export default {
         .getSystemMenuList(params)
         .then(response => {
           if (response.length > 0) {
-            let list = response;
-
-            list
-              .filter(e => e.ParentID === 0)
-              .forEach(element => {
-                this.menuList.push({
-                  key: element.ID,
-                  title: element.Title,
-                  children: []
-                });
-              });
-
-            let temp = list.filter(e => e.ParentID !== 0);
-
-            this.menuList.forEach(item => {
-              item.children = [];
-              let children = temp.filter(e => e.ParentID === item.key);
-              if (children.length > 0) {
-                children.forEach(items => {
-                  item.children.push({
-                    key: items.ID,
-                    title: items.Title
-                  });
-                });
-              }
-            });
+            this.menuList = this.utils$.getTreeData(response, 0);
           }
           this.adSpin$.hide();
         })

@@ -42,6 +42,7 @@
             shape="square"
             :size="64"
             :style="{backgroundColor: '#1d6ad2', verticalAlign: 'middle',cursor:'pointer'}"
+            @click="selectIconHandller();"
           >
             <i :class="params.Icon" style="font-size:30px"></i>
           </a-avatar>
@@ -73,6 +74,7 @@
 
 <script>
 import adSystemMenuService from "../../../service/adSystemMenuService";
+import AdIconListBaseComponent from "../../../components/base/adIconList/index.vue";
 export default {
   name: "AdSystemMenuModifyComponent",
   data() {
@@ -134,6 +136,22 @@ export default {
         .catch(error => {
           this.adSpin$.hide();
         });
+    },
+    /**
+     * 选择图标回调事件
+     */
+    selectIconHandller() {
+      this.adModal$({
+        visible: true,
+        title: `选择图标`,
+        cancelText: "关闭",
+        componentName: AdIconListBaseComponent,
+        params: {},
+        okHandller: (options, close) => {
+          this.params.Icon = options.params.IconData.icon;
+          close();
+        }
+      });
     },
     /**
      * 保存

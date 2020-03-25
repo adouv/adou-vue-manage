@@ -26,6 +26,7 @@
       v-if="modalOption.componentName"
       :is="modalOption.componentName"
       :params="modalOption.params"
+      @selectEvent="selectIconHandller"
     ></component>
     <template slot="footer">
       <a-button @click="cancelHandller" v-if="modalOption.cancelTextShow">{{modalOption.cancelText}}</a-button>
@@ -201,6 +202,12 @@ export default {
      */
     okHandller() {
       this.modalOption.okHandller(this.modalOption, this.closeHandller);
+    },
+    /**
+     * 选择图标回调事件
+     */
+    selectIconHandller(event) {
+      this.modalOption.params.IconData = event;
     }
   }
 };

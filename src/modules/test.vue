@@ -1,5 +1,7 @@
 <template>
   <div class="ad-test">
+    <ad-icon-list></ad-icon-list>
+    <!--
     <div class="cropper-main">
       <vueCropper
         ref="cropper"
@@ -34,7 +36,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -124,13 +126,14 @@ export default {
 
 <style lang="scss" scoped>
 .ad-test {
+  width: 100%;
   display: flex;
   .cropper-main {
     width: 247px;
     height: 228px;
   }
-  .cropper-tool{
-      border: 1px solid #f00;
+  .cropper-tool {
+    border: 1px solid #f00;
   }
 }
 </style>

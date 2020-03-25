@@ -17,6 +17,10 @@
       <!---->
       <template slot="Title" slot-scope="text,record">{{record.Title}}({{record.ID}})</template>
       <!---->
+      <template slot="Icon" slot-scope="text">
+        <i :class="text"></i>
+      </template>
+      <!---->
       <template slot="IsValide" slot-scope="text,record">
         <span>{{record.IsValide===1?'是':'否'}}</span>
       </template>
@@ -75,6 +79,14 @@ export default {
           key: "Title",
           scopedSlots: {
             customRender: "Title"
+          }
+        },
+        {
+          title: "图标",
+          dataIndex: "Icon",
+          key: "Icon",
+          scopedSlots: {
+            customRender: "Icon"
           }
         },
         {

@@ -1,14 +1,51 @@
 const gulp = require('gulp')
 const fs = require('fs')
-const iconData = require('./src/assets/lib/themify-icons/Themify IconFonts 5-23-2014.json')
+const tIconData = require('./src/assets/lib/themify-icons/Themify IconFonts 5-23-2014.json')
+const wIconData = require('./src/assets/lib/webicons/src/icons.json')
 
-gulp.task('web-icon', function() {
+gulp.task('wicon', function() {
+    var list = [];
+    Object.keys(wIconData).forEach((item, index) => {
+        let params = {
+            id: index,
+            name: item,
+            icon: "icon wb-" + item
+        };
+        list.push(params);
+    });
+
+    let result = {
+        UserId: null,
+        Data: list,
+        Message: "成功",
+        ErrorCode: "0000",
+        IsSuccess: true,
+        Status: 200
+    };
+
+
+    fs.writeFile('./static/icon/iconWeb.json', JSON.stringify(result), { 'flag': 'a' }, function(err) {
+        if (err) {
+            throw err;
+        }
+
+        console.log('Hello.');
+
+        // 写入成功后读取测试
+        fs.readFile('./static/icon/iconWeb.json', 'utf-8', function(err, data) {
+            if (err) {
+                throw err;
+            }
+            console.log(data);
+        });
+    });
+});
+
+gulp.task('ticon', function() {
     var list = [];
     var temp = [];
-    iconData.iconSets.forEach((item, index) => {
+    tIconData.iconSets.forEach((item, index) => {
         temp.push(...item.selection);
-        // console.log(item);
-
     });
 
     temp.forEach((item, index) => {
@@ -18,11 +55,19 @@ gulp.task('web-icon', function() {
             icon: 'icon ti-' + item.name
         };
 
-        console.log(args);
-
         list.push(args);
     });
-    fs.writeFile('./static/icon/iconThemify.json', JSON.stringify(list), { 'flag': 'a' }, function(err) {
+
+    let result = {
+        UserId: null,
+        Data: list,
+        Message: "成功",
+        ErrorCode: "0000",
+        IsSuccess: true,
+        Status: 200
+    };
+
+    fs.writeFile('./static/icon/iconThemify.json', JSON.stringify(result), { 'flag': 'a' }, function(err) {
         if (err) {
             throw err;
         }

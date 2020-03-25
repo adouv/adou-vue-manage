@@ -1,8 +1,8 @@
-import AdExampleBaseComponent from './index.vue'
+import AdIconListBaseComponent from './index.vue'
 /** 
- * 布局组件
+ * 图标组件
  */
-export const adExampleBaseInstall = (Vue) => {
-    const Constructor = Vue.extend(AdExampleBaseComponent);
-    Vue.component('ad-example', Constructor);
+export const adIconListBaseInstall = (Vue) => {
+    const Constructor = Vue.extend(AdIconListBaseComponent);
+    Vue.component('ad-icon-list', Constructor);
 }
