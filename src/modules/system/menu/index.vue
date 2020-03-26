@@ -1,5 +1,5 @@
 <template>
-  <ad-main :title="['系统菜单管理']">
+  <ad-main :title="['首页','系统管理','菜单管理']">
     <div class="row row-lg">
       <div class="col-sm-12 col-md-12">
         <a-button type="inverse" @click.native="getAdSystemMenuList()">刷新</a-button>
@@ -7,49 +7,51 @@
       </div>
     </div>
 
-    <a-table
-      class="ant-tree-table"
-      :columns="columns"
-      :dataSource="list"
-      :pagination="false"
-      style="margin-top:20px"
-    >
-      <!---->
-      <template slot="Icon" slot-scope="text">
-        <i :class="text"></i>
-      </template>
-      <!---->
-      <template slot="IsValide" slot-scope="text,record">
-        <span>{{record.IsValide===1?'是':'否'}}</span>
-      </template>
-      <!---->
-      <template slot="Operating" slot-scope="text,record">
-        <a-button
-          type="primary"
-          size="small"
-          icon="setting"
-          title="设置操作权限"
-          v-if="record.Type===1"
-          @click.native="btnOperationHandller(record);"
-        ></a-button>
-        <a-button
-          type="danger"
-          size="small"
-          icon="delete"
-          v-if="record.Type>=0"
-          title="删除"
-          @click.native="btnDeleteHandller(record);"
-        ></a-button>
-        <a-button
-          type="primary"
-          icon="edit"
-          size="small"
-          title="编辑"
-          v-if="record.Type>=0"
-          @click.native="btnModifyHandller(record);"
-        ></a-button>
-      </template>
-    </a-table>
+    <div class="table-box">
+      <a-table
+        class="ant-tree-table"
+        :columns="columns"
+        :dataSource="list"
+        :pagination="false"
+        style="margin-top:20px;min-width:1000px;"
+      >
+        <!---->
+        <template slot="Icon" slot-scope="text">
+          <i :class="text"></i>
+        </template>
+        <!---->
+        <template slot="IsValide" slot-scope="text,record">
+          <span>{{record.IsValide===1?'是':'否'}}</span>
+        </template>
+        <!---->
+        <template slot="Operating" slot-scope="text,record">
+          <a-button
+            type="primary"
+            size="small"
+            icon="setting"
+            title="设置操作权限"
+            v-if="record.Type===1"
+            @click.native="btnOperationHandller(record);"
+          ></a-button>
+          <a-button
+            type="danger"
+            size="small"
+            icon="delete"
+            v-if="record.Type>=0"
+            title="删除"
+            @click.native="btnDeleteHandller(record);"
+          ></a-button>
+          <a-button
+            type="primary"
+            icon="edit"
+            size="small"
+            title="编辑"
+            v-if="record.Type>=0"
+            @click.native="btnModifyHandller(record);"
+          ></a-button>
+        </template>
+      </a-table>
+    </div>
   </ad-main>
 </template>
 
@@ -295,3 +297,10 @@ export default {
 };
 </script>
 
+
+
+<style lang="scss" scoped>
+.table-box {
+  overflow-x: auto;
+}
+</style>

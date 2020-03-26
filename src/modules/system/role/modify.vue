@@ -1,6 +1,6 @@
 <template>
   <ad-main
-    :title="['系统角色管理',`${params.ID === 0 ? '添加' : '编辑'}系统角色`]"
+    :title="['首页','系统管理','角色管理',`${params.ID === 0 ? '添加' : '编辑'}角色`]"
     back
     class="ad-system-role-modify"
   >
@@ -19,6 +19,7 @@
               :treeData="menuList"
               :selectedKeys="defaultKey"
               :autoExpandParent="true"
+              :replaceFields="{title:'Title'}"
               v-model="params.MenuList"
             ></a-tree>
           </div>

@@ -7,13 +7,14 @@
             <li class="site-menu-category"></li>
             <li class="site-menu-item" v-for="(item,index) in list" :key="index">
               <a href="javascript:void(0);" @click="showSubMenuHandller(item);">
-                <i class="fa fa-bandcamp"></i>
+                <i :class="item.icon"></i>
                 <span class="site-menu-title">{{item.title}}</span>
                 <span class="icon-right fa fa-angle-right"></span>
               </a>
               <ul class="site-menu-sub auto-scroll" v-show="item.isOpen">
                 <li class="site-menu-item" v-for="(items,indexs) in item.children" :key="indexs">
                   <a href="javascript:void(0);" @click="toPathHandller(items);">
+                    <i :class="items.icon"></i>
                     <span class="site-menu-title">{{items.title}}</span>
                   </a>
                 </li>
@@ -88,7 +89,6 @@ export default {
      * 显示、隐藏子菜单
      */
     showSubMenuHandller(item) {
-      console.log(item);
       if (this.elem$.bodyHasClass("site-menubar-unfold")) {
         item.isOpen = !item.isOpen;
 

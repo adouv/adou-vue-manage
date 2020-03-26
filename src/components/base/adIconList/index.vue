@@ -2,7 +2,7 @@
   <div class="ad-icon-list-base">
     <a-tabs v-model="index" @change="callback">
       <a-tab-pane v-for="item in typeList" :tab="item.title" :key="item.key">
-        <div class="icon-list">
+        <div class="icon-list" :style="{height:height}">
           <div
             v-for="(item,index) in list"
             :key="index"
@@ -22,7 +22,12 @@
 import adIconService from "../../../service/adIconService";
 export default {
   name: "AdIconListBaseComponent",
-  props: {},
+  props: {
+    height: {
+      type: String,
+      default: "300px"
+    }
+  },
   data() {
     return {
       index: 0,
@@ -35,6 +40,14 @@ export default {
         {
           key: 1,
           title: "IconThemify"
+        },
+        {
+          key: 2,
+          title: "IconIon"
+        },
+        {
+          key: 3,
+          title: "IconFontAwesome"
         }
       ],
       list: []
@@ -57,6 +70,16 @@ export default {
           this.list = [];
           this.list = response;
         });
+      } else if (this.index === 2) {
+        adIconService.getIconIonList().then(response => {
+          this.list = [];
+          this.list = response;
+        });
+      } else if (this.index === 3) {
+        adIconService.getIconFontAwesomeList().then(response => {
+          this.list = [];
+          this.list = response;
+        });
       }
     },
     callback() {
@@ -74,12 +97,13 @@ export default {
 @import "../../../assets/scss/ddd/mixin.scss";
 .ad-icon-list-base {
   width: 100%;
-  height: 200px;
-  overflow-y: auto;
-  @include scroll-bar(3px);
+
   .icon-list {
     display: flex;
     flex-wrap: wrap;
+    overflow-x: hidden;
+    overflow-y: auto;
+    @include scroll-bar(3px);
     div {
       width: 20%;
       text-align: center;

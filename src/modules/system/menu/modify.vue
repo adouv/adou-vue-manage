@@ -1,5 +1,5 @@
 <template>
-  <ad-main :title="['系统菜单管理',`${params.ID === 0 ? '添加' : '编辑'}系统菜单`]" back>
+  <ad-main :title="['首页','系统管理','菜单管理',`${params.ID === 0 ? '添加' : '编辑'}菜单`]" back>
     <div class="row row-lg">
       <div class="col-sm-12 col-md-12">
         <ad-example title="菜单类型" required>
@@ -40,11 +40,11 @@
         <ad-example title="图标" des="点击图标进行更换">
           <a-avatar
             shape="square"
-            :size="64"
+            :size="32"
             :style="{backgroundColor: '#1d6ad2', verticalAlign: 'middle',cursor:'pointer'}"
             @click="selectIconHandller();"
           >
-            <i :class="params.Icon" style="font-size:30px"></i>
+            <i :class="params.Icon" style="font-size:20px"></i>
           </a-avatar>
         </ad-example>
       </div>
@@ -65,7 +65,6 @@
       </div>
 
       <div class="col-sm-12 col-md-12">
-        <a-button type="secondary" @click.native="$router.go(-1);">返回</a-button>
         <a-button type="primary" @click.native="btnSave()">保存</a-button>
       </div>
     </div>
@@ -99,6 +98,8 @@ export default {
   },
   created() {
     let params = this.$route.params;
+
+    console.log(params);
 
     if (params.ID !== undefined) {
       this.params = params;

@@ -1,5 +1,5 @@
 <template>
-  <ad-main :title="['系统管理','用户管理']" message="双击头像可查看详情">
+  <ad-main :title="['首页','系统管理','用户管理']" message="双击头像可查看详情">
     <div class="row row-lg">
       <div class="col-sm-6 col-md-4">
         <ad-example title="用户名">

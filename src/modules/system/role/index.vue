@@ -1,5 +1,5 @@
 <template>
-  <ad-main :title="['系统角色管理']">
+  <ad-main :title="['首页','系统管理','角色管理']">
     <div class="row row-lg">
       <div class="col-sm-6 col-md-4">
         <ad-example title="角色名称">

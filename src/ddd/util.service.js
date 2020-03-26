@@ -81,7 +81,6 @@ export default {
                     if (item.ParentID === pid) {
                         let newNode = item;
                         newNode.key = item.ID;
-                        newNode.title = item.Title;
                         newNode.IsValideCheck = item.IsValide === 1;
                         childList = getJsonTree(data, item.ID);
                         if (childList.length > 0) {

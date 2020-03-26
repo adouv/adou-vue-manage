@@ -57,6 +57,11 @@
                             background-color: $sidebar-bg;
                             li {
                                 text-indent: 1.5em;
+                                a {
+                                    i {
+                                        display: inline !important;
+                                    }
+                                }
                             }
                         }
                     }
