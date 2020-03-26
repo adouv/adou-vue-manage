@@ -23,7 +23,17 @@
       </div>
     </div>
 
-    <ad-table :columns="columns" :dataSource="list" :loading="loading" :minWidth="1000">
+    <ad-table
+      :columns="columns"
+      :dataSource="list"
+      :loading="loading"
+      :minWidth="1000"
+      pagination
+      :total="listTotal"
+      :pageSize="params.PageSize"
+      :pageIndex="params.PageIndex"
+      @pageChange="getAdSystemRoleList"
+    >
       <template slot="IsValide" slot-scope="rows">
         <a-switch
           v-model="rows.data.IsValideCheck"

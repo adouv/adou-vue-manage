@@ -33,7 +33,17 @@
       </div>
     </div>
 
-    <ad-table :columns="columns" :dataSource="list" :loading="loading" :minWidth="1000">
+    <ad-table
+      :columns="columns"
+      :dataSource="list"
+      :loading="loading"
+      :minWidth="1000"
+      pagination
+      :total="listTotal"
+      :pageSize="params.PageSize"
+      :pageIndex="params.PageIndex"
+      @pageChange="getAdSystemUserList"
+    >
       <template slot="Avatar" slot-scope="rows">
         <a-avatar :src="rows.data.Avatar" :size="50" @dblclick="btnDetailHandller(rows.data);" />
       </template>

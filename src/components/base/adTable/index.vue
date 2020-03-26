@@ -42,6 +42,14 @@
         <div class="spin-content"></div>
       </a-spin>
     </div>
+    <a-pagination
+      v-if="pagination"
+      size="small"
+      :total="total"
+      :pageSize="pageSize"
+      v-model="pindex"
+      @change="pageChangeHandller"
+    />
   </div>
 </template>
 
@@ -49,6 +57,37 @@
 export default {
   name: "AdTableBaseComponent",
   props: {
+    /**
+     * 是否显示分页器
+     */
+    pagination: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * 总条数
+     */
+    total: {
+      type: Number,
+      default: 0
+    },
+    /**
+     * 每页条数
+     */
+    pageSize: {
+      type: Number,
+      default: 0
+    },
+    /**
+     * 当前页
+     */
+    pageIndex: {
+      type: Number,
+      default: 0
+    },
+    /**
+     * 最小宽度
+     */
     minWidth: {
       type: Number,
       default: 1000
@@ -77,11 +116,19 @@ export default {
   },
   data() {
     return {
+      pindex: this.pageIndex,
       list: this.dataSource
     };
   },
   mounted() {},
-  methods: {}
+  methods: {
+    /**
+     * 点击页数回调
+     */
+    pageChangeHandller(event) {
+      this.$emit("pageChange", event);
+    }
+  }
 };
 </script>
 
