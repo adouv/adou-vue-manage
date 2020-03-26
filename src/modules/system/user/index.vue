@@ -45,13 +45,10 @@
       @pageChange="getAdSystemUserList"
     >
       <template slot="Avatar" slot-scope="rows">
-        <a-avatar :src="rows.data.Avatar" :size="50" @dblclick="btnDetailHandller(rows.data);" />
+        <a-avatar :src="rows.data.Avatar" :size="30" @dblclick="btnDetailHandller(rows.data);" />
       </template>
-      <template slot="UserType" slot-scope="rows">
-        <a-tag
-          :color=" (rows.data.UserType===0 ? 'geekblue' : 'green')"
-        >{{rows.data.UserType===0?'管理员':'超级管理员'}}</a-tag>
-      </template>
+      <template slot="Gender" slot-scope="rows">{{rows.data.Gender===1?'男':'女'}}</template>
+    
       <template slot="UserStatus" slot-scope="rows">
         <a-switch
           v-model="rows.data.UserStatusCheck"
@@ -76,6 +73,9 @@
             <a-avatar slot="avatar" :src="item.data.Avatar" @click="btnDetailHandller(item.data);" />
 
             <template slot="description">
+              <p>性别：{{item.data.Gender===1?'男':'女'}}</p>
+              <p>邮箱：{{item.data.Email}}</p>
+              <p>手机号：{{item.data.Mobile}}</p>
               <p>更新时间：{{item.data.ModifyTime|dateFormats}}</p>
               <p>
                 <a-switch
@@ -110,6 +110,11 @@ export default {
         UserStatus: -1,
         RoleID: 0,
         IsDel: 1,
+        Gender: 0,
+        Email: "",
+        Mobile: "",
+        DepartmentID: 0,
+        JobID: 0,
         OrderBy: "CreateTime",
         IsDesc: true,
         PageIndex: 1,
@@ -119,45 +124,48 @@ export default {
         {
           title: "编号",
           dataIndex: "ID",
-          key: "ID",
-          class: "mobild",
-          width: "5%"
+          key: "ID"
         },
         {
           title: "头像",
           dataIndex: "Avatar",
-          key: "Avatar",
-          width: "5%"
+          key: "Avatar"
         },
         {
           title: "用户名",
           dataIndex: "UserName",
-          key: "UserName",
-          width: "20%"
+          key: "UserName"
         },
         {
-          title: "用户类型",
-          dataIndex: "UserType",
-          key: "UserType",
-          width: "10%"
+          title: "性别",
+          dataIndex: "Gender",
+          key: "Gender"
+        },
+        {
+          title: "邮箱",
+          dataIndex: "Email",
+          key: "Email"
+        },
+        {
+          title: "手机号",
+          dataIndex: "Mobile",
+          key: "Mobile"
         },
         {
           title: "用户状态",
           dataIndex: "UserStatus",
-          key: "UserStatus",
-          width: "10%"
+          key: "UserStatus"
         },
         {
           title: "更新时间",
           dataIndex: "Time",
-          key: "ModifyTime",
-          width: "10%"
+          key: "ModifyTime"
         },
         {
           title: "操作",
           dataIndex: "Operating",
           key: "Operating",
-          width: "10%"
+          width: "15%"
         }
       ],
       list: [],

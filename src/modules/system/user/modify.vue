@@ -26,6 +26,27 @@
       </div>
 
       <div class="col-sm-12 col-md-12">
+        <ad-example title="性别">
+          <a-radio-group v-model="params.Gender" buttonStyle="solid" size="small">
+            <a-radio-button :value="1">男</a-radio-button>
+            <a-radio-button :value="2">女</a-radio-button>
+          </a-radio-group>
+        </ad-example>
+      </div>
+
+      <div class="col-sm-12 col-md-12">
+        <ad-example title="邮箱">
+          <a-input v-model="params.Email" placeholder="请输入邮箱"></a-input>
+        </ad-example>
+      </div>
+
+      <div class="col-sm-12 col-md-12">
+        <ad-example title="手机号">
+          <a-input v-model="params.Mobile" placeholder="请输入手机号"></a-input>
+        </ad-example>
+      </div>
+
+      <div class="col-sm-12 col-md-12">
         <ad-example title="是否超级管理员">
           <a-radio-group v-model="params.UserType" buttonStyle="solid" size="small">
             <a-radio-button :value="0">否</a-radio-button>
@@ -78,6 +99,9 @@ export default {
         UserName: "",
         UserPwd: "",
         UserPwdConfirm: "",
+        Gender: 1,
+        Email: "",
+        Mobile: "",
         Avatar: "",
         UserType: 0,
         UserStatus: 1,

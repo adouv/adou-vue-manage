@@ -93,8 +93,7 @@ export default {
           title: "编号",
           dataIndex: "ID",
           key: "ID",
-          class: "mobild",
-          width: "5%"
+          class: "mobild"
         },
         {
           title: "角色名称",
@@ -104,20 +103,17 @@ export default {
         {
           title: "是否有效",
           dataIndex: "IsValide",
-          key: "IsValide",
-          width: "10%"
+          key: "IsValide"
         },
         {
           title: "更新时间",
           dataIndex: "Time",
-          key: "ModifyTime",
-          width: "10%"
+          key: "ModifyTime"
         },
         {
           title: "操作",
           dataIndex: "Operating",
-          key: "Operating",
-          width: "10%"
+          key: "Operating"
         }
       ],
       list: [],

@@ -11,6 +11,18 @@
       <div>{{params.UserName}}</div>
     </ad-example>
 
+    <ad-example title="性别：">
+      <div>{{params.Gender===1?'男':'女'}}</div>
+    </ad-example>
+
+    <ad-example title="邮箱：">
+      <div>{{params.Email}}</div>
+    </ad-example>
+
+    <ad-example title="手机号：">
+      <div>{{params.Mobile}}</div>
+    </ad-example>
+
     <ad-example title="用户类型：">
       <div>
         <a-tag color="geekblue" v-if="params.UserType===0">管理员</a-tag>
