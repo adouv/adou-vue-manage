@@ -1,6 +1,8 @@
 # adou-vue-manage
 
-> A Vue.js project
+![Image text](https://raw.githubusercontent.com/adouv/adou-vue-manage/master/static/loginpng.png)
+
+![Image text](https://raw.githubusercontent.com/adouv/adou-vue-manage/master/static/layout.png)
 
 ## Build Setup
 
