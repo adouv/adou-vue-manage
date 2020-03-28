@@ -70,7 +70,10 @@ export default {
             this.$message.warning("用户已禁用,请联系管理员");
           } else {
             this.local$.removeItem(publicEnum.AD_LOCAL_USER_INFO);
-            this.local$.setItem(publicEnum.AD_LOCAL_USER_INFO, JSON.stringify(response));
+            this.local$.setItem(
+              publicEnum.AD_LOCAL_USER_INFO,
+              JSON.stringify(response)
+            );
             this.$message.info("登录成功");
             setTimeout(() => {
               window.location.href = "/";
