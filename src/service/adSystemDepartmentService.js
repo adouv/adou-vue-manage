@@ -8,6 +8,15 @@ export default {
      * @param {*} params 
      * @param {*} config 
      */
+    async getAdSystemDepartmentInfoByID(params = {}, config = {}) {
+        let result = await Vue.http.post(`AdSystemDepartment/GetAdSystemDepartmentInfoByIDHandler.ashx`, params, config);
+        return result;
+    },
+    /**
+     * 
+     * @param {*} params 
+     * @param {*} config 
+     */
     async getAdSystemDepartmentList(params = {}, config = {}) {
         let result = await Vue.http.post(`AdSystemDepartment/GetAdSystemDepartmentListHandler.ashx`, params, config);
         return result;

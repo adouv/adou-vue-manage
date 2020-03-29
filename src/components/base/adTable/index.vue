@@ -43,7 +43,7 @@
       </a-spin>
     </div>
     <a-pagination
-      v-if="pagination"
+      v-if="pagination && dataSource.length>0"
       size="small"
       :total="total"
       :pageSize="pageSize"
