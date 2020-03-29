@@ -17,7 +17,12 @@
     >
       <!---->
       <template slot="IsValide" slot-scope="text,record">
-        <span>{{record.IsValide===1?'是':'否'}}</span>
+        <a-switch
+          v-model="record.IsValideCheck"
+          checkedChildren="启用"
+          unCheckedChildren="禁用"
+          @change="userStatusCheckChangeHandller(record);"
+        />
       </template>
       <!---->
       <template slot="ModifyTime" slot-scope="text,record">
@@ -110,7 +115,36 @@ export default {
       adSystemDepartmentService
         .getAdSystemDepartmentList(this.params)
         .then(response => {
+          if (response.length > 0) {
+            response.forEach(element => {
+              element.IsValideCheck = element.IsValide === 1;
+            });
+          }
+
           this.list = this.utils$.getTreeData(response, 0);
+        });
+    },
+    /**
+     * 状态修改
+     */
+    userStatusCheckChangeHandller(item) {
+      let params = {
+        ID: item.ID,
+        IsValide: item.IsValideCheck ? 1 : 0
+      };
+
+      adSystemDepartmentService
+        .updateAdSystemDepartmentIsValideByID(params)
+        .then(response => {
+          if (response > 0) {
+            if (params.IsValide === 1) {
+              this.$message.info("已设置为有效");
+            } else {
+              this.$message.info("已设置为无效");
+            }
+          } else {
+            this.$message.error("设置失败");
+          }
         });
     },
     /**
