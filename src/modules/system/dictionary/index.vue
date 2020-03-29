@@ -42,7 +42,7 @@
           </div>
 
           <div class="col-sm-12 col-md-12">
-            <a-button type="inverse">搜索</a-button>
+            <a-button type="inverse" @click="getSystemDictionaryList">搜索</a-button>
             <a-button type="primary" @click="$router.push({name:'adSysDictionaryModify'});">添加</a-button>
           </div>
         </div>
