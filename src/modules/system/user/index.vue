@@ -48,7 +48,7 @@
         <a-avatar :src="rows.data.Avatar" :size="30" @dblclick="btnDetailHandller(rows.data);" />
       </template>
       <template slot="Gender" slot-scope="rows">{{rows.data.Gender===1?'男':'女'}}</template>
-    
+      <template slot="DeptAndJob" slot-scope="rows">{{rows.data.DeptAndJobName}}</template>
       <template slot="UserStatus" slot-scope="rows">
         <a-switch
           v-model="rows.data.UserStatusCheck"
@@ -74,6 +74,7 @@
 
             <template slot="description">
               <p>性别：{{item.data.Gender===1?'男':'女'}}</p>
+              <p>部门/岗位：{{item.data.DeptAndJobName}}</p>
               <p>邮箱：{{item.data.Email}}</p>
               <p>手机号：{{item.data.Mobile}}</p>
               <p>更新时间：{{item.data.ModifyTime|dateFormats}}</p>
@@ -147,6 +148,11 @@ export default {
           key: "Email"
         },
         {
+          title: "部门/岗位",
+          dataIndex: "DeptAndJob",
+          key: "DeptAndJob"
+        },
+        {
           title: "手机号",
           dataIndex: "Mobile",
           key: "Mobile"
@@ -198,6 +204,14 @@ export default {
                 element.Avatar = require("../../../assets/images/user9-200x200.png");
               }
               element.UserStatusCheck = element.UserStatus === 1;
+              element.DeptAndJobName = "";
+              if (element.DepartmentInfo) {
+                element.DeptAndJobName = element.DepartmentInfo.Name + "/";
+              }
+              if (element.JobInfo) {
+                element.DeptAndJobName += element.JobInfo.Name;
+              }
+
               this.list.push(element);
             });
           }

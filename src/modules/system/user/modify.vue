@@ -47,6 +47,29 @@
       </div>
 
       <div class="col-sm-12 col-md-12">
+        <ad-example title="部门" required>
+          <div class="ad-tree-list" v-if="deptList.length!==0">
+            <a-tree
+              :treeData="deptList"
+              :replaceFields="{title:'Name'}"
+              defaultExpandAll
+              :defaultSelectedKeys="[params.DepartmentID]"
+              @select="onSelectHandller"
+            ></a-tree>
+          </div>
+        </ad-example>
+      </div>
+
+      <div class="col-sm-12 col-md-12">
+        <ad-example title="岗位" required>
+          <ad-select name="JobID" v-model="params.JobID">
+            <option :value="0">请选择岗位</option>
+            <option v-for="(item,index) in jobList" :key="index" :value="item.ID">{{item.Name}}</option>
+          </ad-select>
+        </ad-example>
+      </div>
+
+      <div class="col-sm-12 col-md-12">
         <ad-example title="是否超级管理员">
           <a-radio-group v-model="params.UserType" buttonStyle="solid" size="small">
             <a-radio-button :value="0">否</a-radio-button>
@@ -56,14 +79,9 @@
       </div>
 
       <div class="col-sm-12 col-md-12" v-if="params.UserType==0">
-        <ad-example title="角色">
+        <ad-example title="角色" des="不是超级管理时必选">
           <div class="td-tree-list" v-if="roleList.length!==0">
-            <a-tree
-              checkable
-              :treeData="roleList"
-              :selectedKeys="defaultKey"
-              v-model="params.RoleList"
-            />
+            <a-tree checkable :treeData="roleList" v-model="params.RoleList" />
           </div>
         </ad-example>
       </div>
@@ -88,7 +106,8 @@
 <script>
 import adSystemUserService from "../../../service/adSystemUserService";
 import adSystemRoleService from "../../../service/adSystemRoleService";
-import adSystemUserAndRoleService from "../../../service/adSystemUserAndRoleService";
+import adSystemDepartmentService from "../../../service/adSystemDepartmentService";
+import adSystemJobService from "../../../service/adSystemJobService";
 import validEnum from "../../../enum/valid.enum";
 export default {
   name: "AdSystemUserModifyComponent",
@@ -105,12 +124,15 @@ export default {
         Avatar: "",
         UserType: 0,
         UserStatus: 1,
+        DepartmentID: 0,
+        JobID: 0,
         RoleID: 0,
         RoleList: [],
         Sort: 100
       },
       roleList: [],
-      defaultKey: []
+      deptList: [],
+      jobList: []
     };
   },
   created() {
@@ -121,28 +143,32 @@ export default {
       this.params.UserPwdConfirm = params.UserPwd;
     }
 
-    this.getSystemRoleList();
+    this.getRoleAndDeptAndJobList();
   },
   methods: {
-    /**
-     * 获取系统角色列表
-     */
-    async getSystemRoleList() {
+    async getRoleAndDeptAndJobList() {
       try {
         this.roleList = [];
-        this.defaultKey = [];
+        this.deptList = [];
+        this.jobList = [];
 
         let params = {
           IsValide: 1,
           IsDel: 1,
-          OrderBy: "CreateTime",
+          OrderBy: "ModifyTime",
           IsDesc: true
         };
 
-        let result = await adSystemRoleService.GetSystemRoleList(params);
+        let rolePro = adSystemRoleService.GetSystemRoleList(params);
+        let deptPro = adSystemDepartmentService.getAdSystemDepartmentList(
+          params
+        );
+        let jobPro = adSystemJobService.getAdSystemJobList(params);
 
-        if (result.length > 0) {
-          result.forEach(element => {
+        let result = await Promise.all([rolePro, deptPro, jobPro]);
+
+        if (result[0].length > 0) {
+          result[0].forEach(element => {
             this.roleList.push({
               key: element.ID,
               title: element.Name,
@@ -150,10 +176,26 @@ export default {
             });
           });
         }
+
+        if (result[1].length > 0) {
+          this.deptList = this.utils$.getTreeData(result[1], 0);
+        }
+
+        if (result[2].length > 0) {
+          this.jobList = result[2];
+        }
+
         this.adSpin$.hide();
       } catch (error) {
         this.adSpin$.hide();
       }
+    },
+    /**
+     * 选择部门
+     */
+    onSelectHandller(selectedKeys, info) {
+      this.params.DepartmentID =
+        selectedKeys[0] === undefined ? 0 : selectedKeys[0];
     },
     /**
      * 保存
@@ -195,6 +237,16 @@ export default {
             return;
           }
         }
+      }
+
+      if (this.params.DepartmentID === 0) {
+        this.$message.info("请选择部门");
+        return;
+      }
+
+      if (this.paramsa.JobID === 0) {
+        this.$message.info("请选择岗位");
+        return;
       }
 
       if (this.params.UserType == 0) {
