@@ -17,7 +17,6 @@
             <a-tree
               checkable
               :treeData="menuList"
-              :selectedKeys="defaultKey"
               :autoExpandParent="true"
               :replaceFields="{title:'Title'}"
               :defaultCheckedKeys="defaultCheckedKeys"
