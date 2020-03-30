@@ -13,7 +13,6 @@
 
       <div class="col-sm-12 col-md-12">
         <ad-example title="菜单">
-          {{params.MenuList}}
           <div class="td-tree-list" v-if="menuList.length!==0">
             <a-tree
               checkable
