@@ -244,7 +244,7 @@ export default {
         return;
       }
 
-      if (this.paramsa.JobID === 0) {
+      if (this.params.JobID === 0) {
         this.$message.info("请选择岗位");
         return;
       }
