@@ -13,6 +13,7 @@
 
       <div class="col-sm-12 col-md-12">
         <ad-example title="菜单">
+          {{params.MenuList}}
           <div class="td-tree-list" v-if="menuList.length!==0">
             <a-tree
               checkable
@@ -20,7 +21,8 @@
               :selectedKeys="defaultKey"
               :autoExpandParent="true"
               :replaceFields="{title:'Title'}"
-              v-model="params.MenuList"
+              :defaultCheckedKeys="defaultCheckedKeys"
+              @check="checkMenuHandller"
             ></a-tree>
           </div>
         </ad-example>
@@ -58,7 +60,7 @@ export default {
         MenuList: []
       },
       menuList: [],
-      defaultKey: []
+      defaultCheckedKeys: []
     };
   },
   created() {},
@@ -76,7 +78,7 @@ export default {
      */
     getSystemMenuList() {
       this.menuList = [];
-      this.defaultKey = [];
+      this.defaultCheckedKeys = [];
 
       let params = {
         IsDel: 1,
@@ -88,6 +90,14 @@ export default {
         .getSystemMenuList(params)
         .then(response => {
           if (response.length > 0) {
+            response.forEach(element => {
+              if (
+                this.params.MenuList.includes(element.ID) &&
+                element.ParentID !== 0
+              ) {
+                this.defaultCheckedKeys.push(element.ID);
+              }
+            });
             this.menuList = this.utils$.getTreeData(response, 0);
           }
           this.adSpin$.hide();
@@ -95,6 +105,12 @@ export default {
         .catch(err => {
           this.adSpin$.hide();
         });
+    },
+    /**
+     * 选择菜单
+     */
+    checkMenuHandller(checkedKeys, info) {
+      this.params.MenuList = checkedKeys.concat(info.halfCheckedKeys);
     },
     /**
      * 保存
