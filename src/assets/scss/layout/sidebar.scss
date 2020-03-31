@@ -60,6 +60,9 @@
                                 a {
                                     i {
                                         display: inline !important;
+                                        &:before {
+                                            display: inline !important;
+                                        }
                                     }
                                 }
                             }

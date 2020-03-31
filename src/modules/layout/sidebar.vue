@@ -5,6 +5,12 @@
         <div class="tab-pane animation-fade h-full active auto-scroll" role="tabpanel">
           <ul class="site-menu">
             <li class="site-menu-category"></li>
+            <li class="site-menu-item">
+              <a href="javascript:void(0);" @click="toPathHandller('home');">
+                <i class="icon wb-dashboard"></i>
+                <span class="site-menu-title">首页</span>
+              </a>
+            </li>
             <li class="site-menu-item" v-for="(item,index) in list" :key="index">
               <a href="javascript:void(0);" @click="showSubMenuHandller(item);">
                 <i :class="item.icon"></i>
@@ -101,6 +107,10 @@ export default {
      * 页面跳转
      */
     toPathHandller(item) {
+      if (item === "home") {
+        this.$router.push({ name: "home" });
+        return;
+      }
       this.local$.removeItem("LEFT_SIDEBAR_ITEM");
       this.local$.setItem("LEFT_SIDEBAR_ITEM", JSON.stringify(item));
       if (!$("body").hasClass("site-mobile-menubar")) {

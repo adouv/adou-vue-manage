@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import AuthService from '../ddd/auth.service'
 import systemRouter from "./systemRouter";
+import systemDevelopmentRouter from "./systemDevelopmentRouter";
+
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => console.log(err))
@@ -23,7 +25,8 @@ const routers = [{
             name: 'adTest',
             component: resolve => require(['@/modules/test.vue'], resolve)
         },
-        ...systemRouter
+        ...systemRouter,
+        ...systemDevelopmentRouter
     ]
 }, {
     path: '/login',
