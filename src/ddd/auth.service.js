@@ -1,4 +1,7 @@
 import publicEnum from "../enum/public.enum";
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
+// import adSystemMenuService from "../service/adSystemMenuService";
 /** 
  * AuthService
  * 验证服务
@@ -18,12 +21,17 @@ export default {
      */
     tokenAuth: (vue, router, routers) => {
         router.beforeEach((to, from, next) => {
+            NProgress.start();
+
             let user = vue.local.getItem(publicEnum.AD_LOCAL_USER_INFO);
+
+
 
             let IsLogin = false;
 
             if (user) {
                 IsLogin = true;
+                // loadRouter(user, router, next, to);
             }
 
             let nextRoute = [];
@@ -50,5 +58,43 @@ export default {
             }
             next();
         });
-    }
+
+        router.afterEach(() => {
+            NProgress.done();
+        });
+    },
+
 };
+/**
+ * 拉取路由，并添加路由
+ * @param {*} user 
+ * @param {*} router 
+ */
+// const loadRouter = (user, router, next, to) => {
+//     if (user) {
+//         let u = JSON.parse(user);
+//         let params = {
+//             UserID: u.ID
+//         };
+//         adSystemMenuService.GetSystemMenuListByUserID(params).then(response => {
+//             console.log(response);
+//             let routerList = [];
+//             if (response && response.length > 0) {
+//                 response.filter(e => e.Type === 1 && e.ComponentName && !e.IsExternalLink).forEach(item => {
+//                     let args = {
+//                         name: item.Url,
+//                         path: `/${item.Path}`,
+//                         component: resolve => require([`@/modules/${item.Path}`], resolve),
+//                         meta: {
+//                             title: item.Title,
+//                             perms: item.Perms
+//                         }
+//                     };
+//                     routerList.push(args)
+//                 });
+//             }
+//             router.addRoutes(routerList);
+//             next({...to, replace: true })
+//         });
+//     }
+// }

@@ -42,7 +42,7 @@
           </li>
         </ul>
         <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right navbar-nav-right">
-          <li class="nav-item dropdown show" id="admui-navbarUser">
+          <li class="nav-item dropdown show">
             <a
               class="nav-link navbar-avatar"
               data-toggle="dropdown"
@@ -81,13 +81,27 @@
               </a>
             </div>
           </li>
+          <li class="nav-item">
+            <a class="nav-link navbar-avatar">
+              <span class="avatar">
+                <i>{{dept.Name}}</i>
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navbar-avatar">
+              <span class="avatar">
+                <i>{{job.Name}}</i>
+              </span>
+            </a>
+          </li>
           <li
             class="nav-item d-none d-sm-block"
             data-toggle="tooltip"
             data-placement="bottom"
             title="在手机上预览本页"
           >
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#admui-mobileView">
+            <a class="nav-link" href="#" data-toggle="modal">
               <i class="icon wb-mobile"></i>
               <span class="sr-only">在手机上预览</span>
             </a>
@@ -171,27 +185,30 @@
 </template>
 
 <script>
+import PublicEnum from "../../enum/public.enum";
 export default {
   name: "AdLayoutHeaderComponent",
   data() {
     return {
-      sidebarWidth: 0,
       user: {
         UserName: "",
         Avatar: ""
+      },
+      dept: {
+        Name: ""
+      },
+      job: {
+        Name: ""
       }
     };
-  },
-  watch: {
-    minSidebarWidth(val) {
-      this.sidebarWidth = val;
-    }
   },
   mounted() {
     this.user = this.local$.getUser();
     if (!this.user.Avatar) {
       this.user.Avatar = require("../../assets/images/user9-200x200.png");
     }
+    this.dept = JSON.parse(this.local$.getItem(PublicEnum.AD_LOCAL_USER_DEPT));
+    this.job = JSON.parse(this.local$.getItem(PublicEnum.AD_LOCAL_USER_JOB));
   },
   methods: {
     /**

@@ -4,6 +4,7 @@ import Vue from 'vue'
 import Antd, { message, Modal } from 'ant-design-vue'
 import App from './App'
 import router from './router'
+import store from "./store/index"
 
 import localStorageService from './ddd/localStorage.service'
 import httpService from './ddd/http.service'
@@ -12,7 +13,6 @@ import encryptService from './ddd/encrypt.service'
 import utilService from './ddd/util.service'
 
 import { AdComponentInstall } from "./components/index";
-
 import { AdFilterInstall } from "./filter/index";
 
 import $ from 'jquery'
@@ -49,6 +49,7 @@ Vue.utils = Vue.prototype.utils$ = utilService
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
+    store,
     $,
     router,
     components: { App },

@@ -59,11 +59,61 @@ export default {
       params: {
         UserName: "Administrator",
         UserPwd: "111111"
-      }
+      },
+      fieldList: ["RoleList", "DepartmentInfo", "JobInfo", "PermsList"],
+      redirect: undefined
     };
+  },
+  watch: {
+    $route: {
+      handler: function(route) {
+        this.redirect = route.query && route.query.redirect;
+      },
+      immediate: true
+    }
   },
   methods: {
     btnLoginHandller() {
+      // this.$store
+      //   .dispatch("adSysLogin", this.params)
+      //   .then(response => {
+      //     let user = {};
+      //     Object.keys(response).forEach(arg => {
+      //       if (!this.fieldList.includes(arg)) {
+      //         user[arg] = response[arg];
+      //       }
+      //     });
+      //     this.local$.removeItem(publicEnum.AD_LOCAL_USER_INFO);
+      //     this.local$.removeItem(publicEnum.AD_LOCAL_USER_PERMS);
+      //     this.local$.removeItem(publicEnum.AD_LOCAL_USER_DEPT);
+      //     this.local$.removeItem(publicEnum.AD_LOCAL_USER_JOB);
+      //     this.local$.setItem(
+      //       publicEnum.AD_LOCAL_USER_INFO,
+      //       JSON.stringify(user)
+      //     );
+      //     this.local$.setItem(
+      //       publicEnum.AD_LOCAL_USER_PERMS,
+      //       JSON.stringify(response.PermsList)
+      //     );
+      //     this.local$.setItem(
+      //       publicEnum.AD_LOCAL_USER_DEPT,
+      //       JSON.stringify(response.DepartmentInfo)
+      //     );
+      //     this.local$.setItem(
+      //       publicEnum.AD_LOCAL_USER_JOB,
+      //       JSON.stringify(response.JobInfo)
+      //     );
+      //     this.$store.dispatch("setAdSystemUser", user);
+      //     this.$store.dispatch("setAdSystemUserPerms", response.PermsList);
+      //     this.$store.dispatch("setAdSystemUserDept", response.DepartmentInfo);
+      //     this.$store.dispatch("setAdSystemUserJob", response.JobInfo);
+      //     this.$router.push({ path: this.redirect || "/" });
+      //   })
+      //   .catch(err => {
+      //     if (err && err.msg) {
+      //       this.$message.info(err.msg);
+      //     }
+      //   });
       adSystemUserService.SystemUserLogin(this.params).then(response => {
         if (response) {
           if (response.UserStatus === 0) {

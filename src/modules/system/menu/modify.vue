@@ -31,6 +31,18 @@
       </div>
 
       <div class="col-sm-12 col-md-12" v-if="params.Type===1">
+        <ad-example title="页面路径" required>
+          <a-input v-model="params.Path" placeholder="请输入页面路径"></a-input>
+        </ad-example>
+      </div>
+
+      <div class="col-sm-12 col-md-12" v-if="params.Type===1">
+        <ad-example title="组件名称" required>
+          <a-input v-model="params.ComponentName" placeholder="请输入组件名称"></a-input>
+        </ad-example>
+      </div>
+
+      <div class="col-sm-12 col-md-12" v-if="params.Type===1">
         <ad-example title="权限标识" required>
           <a-input v-model="params.Perms" placeholder="请输入权限标识"></a-input>
         </ad-example>
@@ -84,12 +96,14 @@ export default {
         Icon: "",
         Url: "",
         Path: "",
+        ComponentName: "",
         OtherID: 0,
         ParentID: 0,
         LevelID: 0,
         Type: 0,
         Perms: "",
         Sort: 100,
+        IsExternalLink: false,
         IsValide: 1,
         IsDel: 1
       },

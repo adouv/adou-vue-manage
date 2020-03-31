@@ -106,6 +106,11 @@ export default {
           }
         },
         {
+          title: "页面路径",
+          dataIndex: "Path",
+          key: "Path"
+        },
+        {
           title: "是否有效",
           dataIndex: "IsValide",
           key: "IsValide",
