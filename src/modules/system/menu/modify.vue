@@ -103,7 +103,7 @@ export default {
         Type: 0,
         Perms: "",
         Sort: 100,
-        IsExternalLink: false,
+        IsExternalLink: 0,
         IsValide: 1,
         IsDel: 1
       },
