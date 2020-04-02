@@ -27,6 +27,13 @@ export default {
       val: this.value
     };
   },
+  mounted() {
+    this.val = this.value;
+
+    this.$nextTick(() => {
+      this.val = this.value;
+    });
+  },
   methods: {
     /**
      *

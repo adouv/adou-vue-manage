@@ -11,6 +11,14 @@ const routers = [{
         component: resolve => require(['@/modules/systemDevelopment/singleConfig/index'], resolve)
     },
     {
+        path: '/systemDev/adSysDevSingleConfigModify',
+        name: 'adSysDevSingleConfigModify',
+        meta: {
+            title: "系统开发配置 - 编辑单页资料配置"
+        },
+        component: resolve => require(['@/modules/systemDevelopment/singleConfig/modify'], resolve)
+    },
+    {
         path: '/systemDev/adSysDevSingleGroupConfig',
         name: 'adSysDevSingleGroupConfig',
         meta: {
