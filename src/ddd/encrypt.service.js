@@ -1,5 +1,6 @@
 import CryptoJS from "crypto-js";
 import JSEncrypt from "jsencrypt";
+import PublicEnum from "../enum/public.enum";
 /**
  * EncryptService
  * 加密服务
@@ -54,8 +55,8 @@ export default {
         model.Version = "1.0.0";
         model.TimesTamp = this.getTimesTamp();
 
-        if (window.localStorage.getItem("ADOU_USER")) {
-            let user = JSON.parse(window.localStorage.getItem("ADOU_USER"));
+        if (window.localStorage.getItem(PublicEnum.AD_LOCAL_USER_INFO)) {
+            let user = JSON.parse(window.localStorage.getItem(PublicEnum.AD_LOCAL_USER_INFO));
             model.Token = JSON.stringify({
                 ID: user.ID,
                 UserName: user.UserName,

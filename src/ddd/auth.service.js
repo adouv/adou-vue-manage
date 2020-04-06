@@ -25,8 +25,6 @@ export default {
 
             let user = vue.local.getItem(publicEnum.AD_LOCAL_USER_INFO);
 
-
-
             let IsLogin = false;
 
             if (user) {
