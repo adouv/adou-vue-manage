@@ -35,7 +35,7 @@ export default {
      * @param {*} params 
      * @param {*} config 
      */
-    async GetSystemMenuListByUserID(params = {}, config = {}) {
+    async getSystemMenuListByUserID(params = {}, config = {}) {
         let result = await Vue.http.post(`AdSystemMenu/GetSystemMenuListByUserIDHandler.ashx`, params, config);
         return result;
     },

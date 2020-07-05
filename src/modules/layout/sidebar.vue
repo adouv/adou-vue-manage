@@ -64,7 +64,7 @@ export default {
 
       if (user.UserType === 0) {
         adSystemMenuService
-          .GetSystemMenuListByUserID({
+          .getSystemMenuListByUserID({
             UserID: user.ID,
             OrderBy: "Sort",
             IsDesc: false
