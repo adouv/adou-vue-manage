@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import AuthService from '../ddd/auth.service'
 import systemRouter from "./systemRouter";
 import systemDevelopmentRouter from "./systemDevelopmentRouter";
+import salesManageRouter from "./salesManageRouter";
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -26,7 +27,8 @@ const routers = [{
             component: resolve => require(['@/modules/test.vue'], resolve)
         },
         ...systemRouter,
-        ...systemDevelopmentRouter
+        ...systemDevelopmentRouter,
+        ...salesManageRouter
     ]
 }, {
     path: '/login',

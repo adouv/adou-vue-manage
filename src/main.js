@@ -25,6 +25,10 @@ import "@/assets/scss/index.scss"
 
 import '@node/bootstrap/dist/js/bootstrap.bundle.min.js'
 
+import "../static/KE/themes/default/default.css";
+import "../static/KE/kindeditor-all-min.js";
+import "../static/KE/lang/zh-CN.js";
+
 Vue.config.productionTip = false
 
 Vue.use(Antd)

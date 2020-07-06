@@ -60,6 +60,8 @@ export default {
     getSystemMenuListByUser() {
       let user = this.local$.getUser();
 
+      console.log(user);
+
       this.list = [];
 
       if (user.UserType === 0) {

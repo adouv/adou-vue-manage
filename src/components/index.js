@@ -6,6 +6,9 @@ import { adExampleBaseInstall } from "./base/adExample/index";
 import { adSelectBaseInstall } from "./base/adSelect/index";
 import { adUploadAvatarBaseInstall } from "./base/adUploadAvatar/index";
 import { adIconListBaseInstall } from "./base/adIconList/index";
+import { adKeditBaseInstall } from "./base/adKedit/index";
+import { adKeUploadBtnBaseInstall } from "./base/adKeUploadBtn/index";
+import { aadKeUploadBtnBoxBaseInstall } from "./base/adKeUploadBtnBox/index";
 //业务组件
 import { adInputTypeBusinessInstall } from "./business/adInputType/index";
 import { adDicListBusinessInstall } from "./business/adDicList/index";
@@ -24,6 +27,9 @@ export const AdComponentInstall = Vue => {
     adSelectBaseInstall(Vue);
     adUploadAvatarBaseInstall(Vue);
     adIconListBaseInstall(Vue);
+    adKeditBaseInstall(Vue);
+    adKeUploadBtnBaseInstall(Vue);
+    aadKeUploadBtnBoxBaseInstall(Vue);
     //业务组件
     adInputTypeBusinessInstall(Vue);
     adDicListBusinessInstall(Vue);
