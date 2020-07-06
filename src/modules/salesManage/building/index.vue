@@ -64,9 +64,7 @@
         <sup>2</sup>
       </template>
 
-      <template slot="UnitType" slot-scope="rows">
-        {{rows.data.UnitType?rows.data.UnitType:'-'}}
-      </template>
+      <template slot="UnitType" slot-scope="rows">{{rows.data.UnitType?rows.data.UnitType:'-'}}</template>
 
       <template slot="Area" slot-scope="rows">
         {{rows.data.Area?rows.data.Area:'0'}}/m
@@ -217,6 +215,35 @@ export default {
             this.projectList = response;
           }
         });
+    },
+    btnDeleteHandller(item) {
+      this.$confirm({
+        title: "提示",
+        content: "确定要删除吗?",
+        okText: "确认",
+        cancelText: "取消",
+        onOk: () => {
+          let params = {
+            ID: item.ID,
+            IsDel: 0
+          };
+          adSaleRoomService
+            .updateAdSaleRoomIsDelByIDHandler(params)
+            .then(response => {
+              if (response > 0) {
+                this.$message.info("删除成功");
+                this.getDataList();
+              } else {
+                this.$message.error("删除失败");
+              }
+            });
+        }
+      });
+    },
+    btnModifyHandller(item) {
+      this.adSpin$.show({ tip: "正在加载..." });
+
+      this.$router.push({ name: "adSalesBuildingModify", params: item });
     }
   }
 };

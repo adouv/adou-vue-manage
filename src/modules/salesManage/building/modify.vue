@@ -33,7 +33,7 @@
         <ad-example title="所在楼层" required>
           <a-input v-model="params.Layer" addon-after="层" placeholder="请输入所在楼层"></a-input>
         </ad-example>
-      </div> -->
+      </div>-->
 
       <div class="col-sm-12 col-md-12">
         <ad-example title="所在单元" required>
@@ -122,13 +122,31 @@ export default {
         Status: 0,
         IsDel: 1
       },
-      list: []
+      list: [],
+      loading: false
     };
   },
   mounted() {
+    this.$nextTick(() => {
+      let params = this.$route.params;
+      if (params.ID !== undefined) {
+        this.params = params;
+      }
+      this.adSpin$.hide();
+      this.loading = true;
+      console.log(this.params);
+    });
     this.getDataList();
   },
   methods: {
+    beforeCallbackHandller(event) {
+      console.log(event);
+      return true;
+    },
+    uploadCallbackHandller(event) {
+      let result = JSON.parse(event);
+      this.params.Pictrue = result.fullUrl;
+    },
     getDataList() {
       this.list = [];
 
